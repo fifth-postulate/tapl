@@ -1,4 +1,6 @@
-module ArithmeticExpressions exposing (Term(..), eval, fromInt, isNumerical, isValue)
+module ArithmeticExpressions exposing (Term(..), eval, fromInt, isNumerical, isValue, parse)
+
+import Parser exposing (Parser)
 
 
 type Term
@@ -129,3 +131,79 @@ eval term =
 
         Stalled ->
             term
+
+
+parse : String -> Maybe Term
+parse input =
+    case parser input of
+        ( _, h ) :: _ ->
+            Just h
+
+        [] ->
+            Nothing
+
+
+parser : Parser Term
+parser =
+    Parser.ors zeroParser
+        [ trueParser
+        , falseParser
+        , succParser
+        , predParser
+        , isZeroParser
+        , ifParser
+        , Parser.bracketed '(' ')' (Parser.lazy (\_ -> parser))
+        ]
+
+
+zeroParser : Parser Term
+zeroParser =
+    Parser.character 'O'
+        |> Parser.map (always TmZero)
+
+
+trueParser : Parser Term
+trueParser =
+    Parser.character 'T'
+        |> Parser.map (always TmTrue)
+
+
+falseParser : Parser Term
+falseParser =
+    Parser.character 'F'
+        |> Parser.map (always TmFalse)
+
+
+succParser : Parser Term
+succParser =
+    Parser.character 'S'
+        |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
+        |> Parser.map TmSucc
+
+
+predParser : Parser Term
+predParser =
+    Parser.character 'P'
+        |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
+        |> Parser.map TmPred
+
+
+isZeroParser : Parser Term
+isZeroParser =
+    Parser.character '?'
+        |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
+        |> Parser.map TmIsZero
+
+
+ifParser : Parser Term
+ifParser =
+    let
+        eventuallyTerm : Parser Term
+        eventuallyTerm =
+            Parser.lazy (\_ -> parser)
+    in
+    Parser.word "if"
+        |> Parser.ignoreThen eventuallyTerm
+        |> Parser.followedBy eventuallyTerm
+        |> Parser.followedBy eventuallyTerm
+        |> Parser.map (\( ( guard, ifTrue ), ifFalse ) -> TmIf guard ifTrue ifFalse)
