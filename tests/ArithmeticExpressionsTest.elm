@@ -1,6 +1,6 @@
 module ArithmeticExpressionsTest exposing (suite)
 
-import ArithmeticExpressions as Expression exposing (Term(..), eval, fromInt, isNumerical, isValue, parse)
+import ArithmeticExpressions as Expression exposing (Term(..), eval, isNumerical, isValue, parse)
 import Expect exposing (Expectation)
 import Test exposing (..)
 
@@ -9,58 +9,24 @@ suite : Test
 suite =
     describe "Arithmetic Expressions"
         [ describe "fromInt"
-            [ test "0" <|
-                \_ ->
-                    let
-                        actual =
-                            fromInt 0
-
-                        expected =
-                            TmZero
-                    in
-                    Expect.equal actual expected
-            , test "1" <|
-                \_ ->
-                    let
-                        actual =
-                            fromInt 1
-
-                        expected =
-                            TmSucc TmZero
-                    in
-                    Expect.equal actual expected
+            [ fromIntTest { input = 0, expected = TmZero }
+            , fromIntTest { input = 1, expected = TmSucc TmZero }
+            , fromIntTest { input = -1, expected = TmZero }
+            , fromIntTest { input = 3, expected = TmSucc (TmSucc (TmSucc TmZero)) }
             ]
         , describe "isNumerical"
-            [ test "TmZero is numerical" <|
-                \_ ->
-                    toBeTrue (isNumerical TmZero)
-            , test "(TmSucc TmZero) is numerical" <|
-                \_ ->
-                    toBeTrue (isNumerical (TmSucc TmZero))
+            [ isNumericalTest { input = TmZero }
+            , isNumericalTest { input = TmSucc TmZero }
             ]
         , describe "isValue"
-            [ test "TmZero is a value" <|
-                \_ ->
-                    toBeTrue (isValue TmZero)
-            , test "TmFalse is a value" <|
-                \_ ->
-                    toBeTrue (isValue TmFalse)
-            , test "TmTrue is a value" <|
-                \_ ->
-                    toBeTrue (isValue TmTrue)
+            [ isValueTest { input = TmZero }
+            , isValueTest { input = TmFalse }
+            , isValueTest { input = TmTrue }
+            , isValueTest { input = TmSucc TmZero }
             ]
         , describe "eval"
-            [ test "complex expression" <|
-                \_ ->
-                    let
-                        actual =
-                            TmIf (TmIsZero (TmSucc TmZero)) (TmSucc TmZero) TmZero
-                                |> eval
-
-                        expected =
-                            TmZero
-                    in
-                    Expect.equal actual expected
+            [ evalTest { input = TmZero, expected = TmZero }
+            , evalTest { input = TmIf (TmIsZero TmZero) TmFalse TmTrue, expected = TmFalse }
             ]
         , describe "parse"
             [ parseTest { input = "O", expected = TmZero }
@@ -84,6 +50,23 @@ suite =
         ]
 
 
+type alias FromIntTestCase =
+    { input : Int
+    , expected : Term
+    }
+
+
+fromIntTest : FromIntTestCase -> Test
+fromIntTest testCase =
+    test (String.fromInt testCase.input) <|
+        \_ ->
+            let
+                actual =
+                    Expression.fromInt testCase.input
+            in
+            Expect.equal actual testCase.expected
+
+
 toBeTrue : Bool -> Expectation
 toBeTrue value =
     if value then
@@ -91,6 +74,48 @@ toBeTrue value =
 
     else
         Expect.fail "value is not true"
+
+
+type alias NumericalTestCase =
+    { input : Term
+    }
+
+
+isNumericalTest : ValueTestCase -> Test
+isNumericalTest testCase =
+    test (Expression.toString testCase.input) <|
+        \_ ->
+            toBeTrue (isNumerical testCase.input)
+
+
+type alias ValueTestCase =
+    { input : Term
+    }
+
+
+isValueTest : ValueTestCase -> Test
+isValueTest testCase =
+    test (Expression.toString testCase.input) <|
+        \_ ->
+            toBeTrue (isValue testCase.input)
+
+
+type alias EvalTestCase =
+    { input : Term
+    , expected : Term
+    }
+
+
+evalTest : EvalTestCase -> Test
+evalTest testCase =
+    test (Expression.toString testCase.input) <|
+        \_ ->
+            let
+                actual =
+                    testCase.input
+                        |> eval
+            in
+            Expect.equal actual testCase.expected
 
 
 type alias ParseTestCase =

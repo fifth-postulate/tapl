@@ -28,16 +28,7 @@ isNumerical term =
 
 fromInt : Int -> Term
 fromInt n =
-    let
-        go : Term -> Int -> Term
-        go acc current =
-            if current <= 0 then
-                acc
-
-            else
-                go (TmSucc acc) (n - 1)
-    in
-    go TmZero n
+    List.foldl (\f acc -> f acc) TmZero (List.repeat n TmSucc)
 
 
 isValue : Term -> Bool
