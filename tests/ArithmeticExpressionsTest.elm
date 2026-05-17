@@ -1,6 +1,6 @@
 module ArithmeticExpressionsTest exposing (suite)
 
-import ArithmeticExpressions exposing (Term(..), eval, fromInt, isNumerical, isValue, parse)
+import ArithmeticExpressions as Expression exposing (Term(..), eval, fromInt, isNumerical, isValue, parse)
 import Expect exposing (Expectation)
 import Test exposing (..)
 
@@ -72,6 +72,15 @@ suite =
             , parseTest { input = "(?SO)", expected = TmIsZero (TmSucc TmZero) }
             , parseTest { input = "if(?SO)(SO)(O)", expected = TmIf (TmIsZero (TmSucc TmZero)) (TmSucc TmZero) TmZero }
             ]
+        , describe "print"
+            [ printTest { input = TmZero, expected = "O" }
+            , printTest { input = TmTrue, expected = "T" }
+            , printTest { input = TmFalse, expected = "F" }
+            , printTest { input = TmSucc TmZero, expected = "S(O)" }
+            , printTest { input = TmPred TmZero, expected = "P(O)" }
+            , printTest { input = TmIsZero TmZero, expected = "?(O)" }
+            , printTest { input = TmIf (TmIsZero TmZero) TmZero (TmSucc TmZero), expected = "if(?(O))(O)(S(O))" }
+            ]
         ]
 
 
@@ -99,3 +108,20 @@ parseTest testCase =
                     parse testCase.input
             in
             Expect.equal actual (Just testCase.expected)
+
+
+type alias PrintTestCase =
+    { input : Term
+    , expected : String
+    }
+
+
+printTest : PrintTestCase -> Test
+printTest testCase =
+    test testCase.expected <|
+        \_ ->
+            let
+                actual =
+                    Expression.toString testCase.input
+            in
+            Expect.equal actual testCase.expected

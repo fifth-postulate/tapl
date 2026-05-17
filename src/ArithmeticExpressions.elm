@@ -1,4 +1,4 @@
-module ArithmeticExpressions exposing (Term(..), eval, fromInt, isNumerical, isValue, parse)
+module ArithmeticExpressions exposing (Term(..), eval, fromInt, isNumerical, isValue, parse, toString)
 
 import Parser exposing (Parser)
 
@@ -207,3 +207,28 @@ ifParser =
         |> Parser.followedBy eventuallyTerm
         |> Parser.followedBy eventuallyTerm
         |> Parser.map (\( ( guard, ifTrue ), ifFalse ) -> TmIf guard ifTrue ifFalse)
+
+
+toString : Term -> String
+toString term =
+    case term of
+        TmTrue ->
+            "T"
+
+        TmFalse ->
+            "F"
+
+        TmZero ->
+            "O"
+
+        TmSucc t ->
+            "S(" ++ toString t ++ ")"
+
+        TmPred t ->
+            "P(" ++ toString t ++ ")"
+
+        TmIsZero t ->
+            "?(" ++ toString t ++ ")"
+
+        TmIf guard ifTrue ifFalse ->
+            "if(" ++ toString guard ++ ")(" ++ toString ifTrue ++ ")(" ++ toString ifFalse ++ ")"
