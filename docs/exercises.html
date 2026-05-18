@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Theory and Programming Languages Exercises</title>
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Theory and Programming Languages Exercises</h1>
+</header>
+<h1 id="section">2.2.6</h1>
+<blockquote>
+<p>Suppose we are given a relation <span
+class="math inline"><em>R</em></span> on a set <span
+class="math inline"><em>S</em></span>. Define the relation <span
+class="math inline"><em>R</em>′</span> as follows:</p>
+</blockquote>
+<p><span
+class="math display"><em>R</em>′ = <em>R</em> ∪ {(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>}</span></p>
+<p>That is, <span class="math inline"><em>R</em>′</span> contains all
+the pairs in <span class="math inline"><em>R</em></span> plus all pairs
+of the form <span class="math inline">(<em>s</em>,<em>s</em>)</span>.
+Show that <span class="math inline"><em>R</em>′</span> is the reflexive
+closure of R.</p>
+<h2 id="proof">Proof</h2>
+<p>A relation <span class="math inline"><em>E</em></span> on <span
+class="math inline"><em>S</em></span> is reflexive when <span
+class="math inline">(<em>s</em>,<em>s</em>) ∈ <em>E</em></span> for all
+<span class="math inline"><em>s</em> ∈ <em>S</em></span>. In other
+words, <span class="math inline"><em>E</em></span> is reflexive if and
+only if</p>
+<p><span
+class="math display">{(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>} ⊂ <em>E</em></span></p>
+<p>By definition of <span class="math inline"><em>R</em>′</span> we have
+<span
+class="math inline">{(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>} ⊂ <em>R</em>′</span>
+so <span class="math inline"><em>R</em>′</span> is reflexive.</p>
+<p>If there is an other reflexive relation <span
+class="math inline"><em>B</em></span> such that <span
+class="math inline"><em>R</em> ⊂ <em>B</em></span> then also <span
+class="math inline"><em>R</em>′ ⊂ <em>B</em></span>. Since if <span
+class="math inline"><em>r</em> ∈ <em>R</em>′</span> then either <span
+class="math inline"><em>r</em> ∈ <em>R</em></span> or <span
+class="math inline"><em>r</em> = (<em>s</em>,<em>s</em>)</span> for an
+<span class="math inline"><em>s</em> ∈ <em>S</em></span>. If <span
+class="math inline"><em>r</em> ∈ <em>R</em></span> then also <span
+class="math inline"><em>r</em> ∈ <em>B</em></span> since <span
+class="math inline"><em>R</em> ⊂ <em>B</em></span>. If <span
+class="math inline"><em>r</em> = (<em>s</em>, <em>s</em></span>) for an
+<span class="math inline"><em>s</em> ∈ <em>S</em></span> then also <span
+class="math inline"><em>r</em> ∈ <em>B</em></span> since <span
+class="math inline"><em>B</em></span> is reflexive. Either way <span
+class="math inline"><em>r</em> ∈ <em>B</em></span> hence <span
+class="math display"><em>R</em>′ ⊂ <em>B</em></span></p>
+<p>So <span class="math inline"><em>R</em>′</span> is the reflexive
+clojure of <span class="math inline"><em>R</em></span>.</p>
+<h1 id="section-1">2.2.7</h1>
+<blockquote>
+<p>Here is a more constructive definition of the transitive closure of a
+relation <span class="math inline"><em>R</em></span>. First we define
+the following sequence of sets of pairs:</p>
+<p><span
+class="math display"><em>R</em><sub>0</sub> = <em>R</em></span></p>
+<p>and</p>
+<p><span
+class="math display"><em>R</em><sub><em>i</em> + 1</sub> = <em>R</em><sub><em>i</em></sub> ∪ {(<em>s</em>,<em>u</em>)|<em>t</em> ∈ <em>S</em>; (<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub>, (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>i</em></sub>}</span></p>
+<p>That is, we construct each <span
+class="math inline"><em>R</em><sub><em>i</em> + 1</sub></span> by adding
+to <span class="math inline"><em>R</em><sub><em>i</em></sub></span> all
+the pairs that can be obtained by “one step transitivity” from pairs
+already in <span
+class="math inline"><em>R</em><sub><em>i</em></sub></span>. Finally,
+define the relation <span
+class="math inline"><em>R</em><sup>+</sup></span> as the union of all
+the <span
+class="math inline"><em>R</em><sub><em>i</em></sub></span>:</p>
+<p><span
+class="math display"><em>R</em><sup>+</sup> = ⋃<sub><em>i</em></sub><em>R</em><sub><em>i</em></sub></span></p>
+<p>Show that <span class="math inline"><em>R</em><sup>+</sup></span>
+really is the transitive closure of <span
+class="math inline"><em>R</em></span>.</p>
+</blockquote>
+<h2 id="lemma">Lemma</h2>
+<p>We first show a little lemma</p>
+<blockquote>
+<p>If for a certain <span
+class="math inline"><em>i</em> ∈ <em>N</em></span> we have <span
+class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
+then for all <span class="math inline"><em>j</em> ≥ <em>i</em></span> we
+have <span
+class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>j</em></sub></span>.</p>
+</blockquote>
+<h3 id="proof-1">Proof</h3>
+<p>We call a number <span class="math inline"><em>n</em></span> cute if
+<span
+class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>n</em></sub></span>.
+Since <span
+class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
+zero is cute.</p>
+<p>Assume <span class="math inline"><em>k</em></span> to be cute, we
+will show that <span class="math inline"><em>k</em> + 1</span> is cute
+as well. Since <span class="math inline"><em>k</em></span> is cute we
+have that <span
+class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>k</em></sub></span>.
+Notice that</p>
+<p><span
+class="math display"><em>R</em><sub><em>i</em> + 1</sub> = <em>R</em><sub><em>i</em></sub> ∪ {(<em>s</em>,<em>u</em>)|<em>t</em> ∈ <em>S</em>; (<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub>, (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>i</em></sub>}</span></p>
+<p>means that <span
+class="math inline"><em>R</em><em>i</em> + <em>k</em> ⊂ <em>R</em><sub><em>i</em> + <em>k</em> + 1</sub></span>
+hence <span
+class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>k</em> + 1</sub></span>
+so <span class="math inline"><em>k</em> + 1</span> is cute.</p>
+<p>By the principle of mathematical induction all natural numbers are
+cute. I.e. <span
+class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>j</em></sub></span>
+for all <span class="math inline"><em>j</em> ≥ <em>i</em></span>.</p>
+<h2 id="proof-2">Proof</h2>
+<p>A relation <span class="math inline"><em>E</em></span> is transitive
+if for pairs <span
+class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>E</em></span>
+we have <span
+class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>E</em></span>.</p>
+<p>Let <span
+class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>R</em><sup>+</sup></span>.
+Then there are <span
+class="math inline"><em>i</em>, <em>j</em> ∈ <em>N</em></span> such that
+<span
+class="math inline">(<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
+and <span
+class="math inline">(<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>j</em></sub></span>.
+Let <span class="math inline"><em>k</em></span> be the maximum of <span
+class="math inline"><em>i</em></span> and <span
+class="math inline"><em>j</em></span>. Then, by the preceding lemma, we
+have <span
+class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.</p>
+<p>By the definition of <span
+class="math inline"><em>R</em><sub><em>k</em> + 1</sub></span> we have
+<span
+class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em> + 1</sub></span>
+so <span
+class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sup>+</sup></span>.</p>
+</body>
+</html>
