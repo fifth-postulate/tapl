@@ -470,5 +470,144 @@ class="math inline"><em>s</em> ∈ <em>S</em><sub><em>k</em> + 2</sub></
 hence <span class="math inline"><em>k</em> + 1</span> is frivolous.</p>
 <p>By the principle of mathematical induction all numbers are
 frivolous.</p>
+<h1 id="principle-of-induction-on-terms">3.3.4 Principle of Induction on
+Terms</h1>
+<blockquote>
+<p>Suppose <span class="math inline"><em>P</em></span> is a predicate on
+terms</p>
+<h3 id="induction-on-depth">Induction on Depth</h3>
+<p>If for each term <span class="math inline"><em>s</em></span>, given
+<span class="math inline"><em>P</em>(<em>r</em>)</span> for all <span
+class="math inline"><em>r</em></span> such that <span
+class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>r</em>) &lt; <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>s</em>)</span>
+we can show <span class="math inline"><em>P</em>(<em>s</em>)</span>,
+then <span class="math inline"><em>P</em>(<em>s</em>)</span> holds for
+all <span class="math inline"><em>s</em></span>.</p>
+<h3 id="induction-on-size">Induction on Size</h3>
+<p>If for each term <span class="math inline"><em>s</em></span>, given
+<span class="math inline"><em>P</em>(<em>r</em>)</span> for all <span
+class="math inline"><em>r</em></span> such that <span
+class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>r</em>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>s</em>)</span>
+we can show <span class="math inline"><em>P</em>(<em>s</em>)</span>,
+then <span class="math inline"><em>P</em>(<em>s</em>)</span> holds for
+all <span class="math inline"><em>s</em></span>.</p>
+<h3 id="structural-induction">Structural Induction</h3>
+<p>If for each term <span class="math inline"><em>s</em></span>, given
+<span class="math inline"><em>P</em>(<em>r</em>)</span> for all
+immediate subterms <span class="math inline"><em>r</em></span> of <span
+class="math inline"><em>s</em></span>, we can show <span
+class="math inline"><em>P</em>(<em>s</em>)</span>, then <span
+class="math inline"><em>P</em>(<em>s</em>)</span> holds for all <span
+class="math inline"><em>s</em></span>.</p>
+</blockquote>
+<h2 id="proof-6">Proof</h2>
+<h3 id="induction-on-depth-1">Induction on Depth</h3>
+<p>We call <span
+class="math inline"><em>n</em> ∈ <em>N</em> \ {0}</span> <em>deep</em>
+if and only if for all terms <span class="math inline"><em>s</em></span>
+of <span
+class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>s</em>) ≤ <em>n</em></span>
+holds that <span class="math inline"><em>P</em>(<em>s</em>)</span>. We
+will show that all numbers are deep.</p>
+<p>Notice that <span class="math inline">1</span> is deep. A term of
+<span class="math inline"><em>t</em></span> with <span
+class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>) = 1</span>
+is a constant and there are no terms with a smaller depth, so are
+assumption holds vacuously and <span
+class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
+<p>Assume <span class="math inline"><em>k</em></span> is deep. We will
+show that <span class="math inline"><em>k</em> + 1</span> is deep. Let
+<span class="math inline"><em>t</em></span> be a term of depth <span
+class="math inline"><em>k</em> + 1</span>. There are two cases</p>
+<ul>
+<li><p><span
+class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em>(<em>t</em>′)</span>
+or <span
+class="math inline"><em>t</em> = <em>p</em><em>r</em><em>e</em><em>d</em>(<em>t</em>′)</span>
+or <span
+class="math inline"><em>t</em> = <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em>(<em>t</em>′)</span>
+for a term <span class="math inline"><em>t</em>′</span>. Notice that in
+all cases <span
+class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>′) &lt; <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>′) + 1 = <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>)</span>.
+<span class="math inline"><em>k</em></span> is deep so <span
+class="math inline"><em>P</em>(<em>t</em>′)</span> holds. With our
+assumption we deduce that <span
+class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p></li>
+<li><p><span
+class="math inline"><em>t</em> = <em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub></span>
+for terms <span class="math inline"><em>t</em><sub>1</sub></span>, <span
+class="math inline"><em>t</em><sub>2</sub></span> and <span
+class="math inline"><em>t</em><sub>3</sub></span>. Notice that for each
+<span class="math inline"><em>i</em> ∈ {1, 2, 3}</span> we have</p></li>
+</ul>
+<p><span
+class="math display"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em><sub><em>i</em></sub>) ≤ <em>m</em><em>a</em><em>x</em>{<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub>} &lt; <em>m</em><em>a</em><em>x</em>{<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub>} + 1 = <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>)</span></p>
+<p><span class="math inline"><em>k</em></span> is deep so <span
+class="math inline"><em>P</em>(<em>t</em><sub>1</sub>)</span>, <span
+class="math inline"><em>P</em>(<em>t</em><sub>2</sub>)</span> and
+$P(t_{3}) hold. With our assumption we deduce that <span
+class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
+<p>In either of the two cases to consider we have shown that <span
+class="math inline"><em>P</em>(<em>t</em>)</span> holds, hence <span
+class="math inline"><em>k</em> + 1</span> is deep.</p>
+<p>With the principle of mathematical induction all natural numbers
+besides 0 are deep.</p>
+<h3 id="induction-on-size-1">Induction on Size</h3>
+<p>We call <span
+class="math inline"><em>n</em> ∈ <em>N</em> \ {0}</span> <em>tall</em>
+if and only if for all terms <span class="math inline"><em>s</em></span>
+of <span
+class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>s</em>) ≤ <em>n</em></span>
+holds that <span class="math inline"><em>P</em>(<em>s</em>)</span>. We
+will show that all numbers are tall.</p>
+<p>Notice that <span class="math inline">1</span> is tall. A term of
+<span class="math inline"><em>t</em></span> with <span
+class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>) = 1</span>
+is a constant and there are no terms with a smaller size, so are
+assumption holds vacuously and <span
+class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
+<p>Assume <span class="math inline"><em>k</em></span> is tall. We will
+show that <span class="math inline"><em>k</em> + 1</span> is tall. Let
+<span class="math inline"><em>t</em></span> be a term of size <span
+class="math inline"><em>k</em> + 1</span>. There are two cases</p>
+<ul>
+<li><p><span
+class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em>(<em>t</em>′)</span>
+or <span
+class="math inline"><em>t</em> = <em>p</em><em>r</em><em>e</em><em>d</em>(<em>t</em>′)</span>
+or <span
+class="math inline"><em>t</em> = <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em>(<em>t</em>′)</span>
+for a term <span class="math inline"><em>t</em>′</span>. Notice that in
+all cases <span
+class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>′) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>′) + 1 = <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span>.
+<span class="math inline"><em>k</em></span> is large so <span
+class="math inline"><em>P</em>(<em>t</em>′)</span> holds. With our
+assumption we deduce that <span
+class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p></li>
+<li><p><span
+class="math inline"><em>t</em> = <em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub></span>
+for terms <span class="math inline"><em>t</em><sub>1</sub></span>, <span
+class="math inline"><em>t</em><sub>2</sub></span> and <span
+class="math inline"><em>t</em><sub>3</sub></span>. Notice that for each
+<span class="math inline"><em>i</em> ∈ {1, 2, 3}</span> we have</p></li>
+</ul>
+<p><span
+class="math display"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub><em>i</em></sub>) ≤ <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>1</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>2</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>3</sub>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>1</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>2</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>3</sub>) + 1 = <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span></p>
+<p><span class="math inline"><em>k</em></span> is deep so <span
+class="math inline"><em>P</em>(<em>t</em><sub>1</sub>)</span>, <span
+class="math inline"><em>P</em>(<em>t</em><sub>2</sub>)</span> and
+$P(t_{3}) hold. With our assumption we deduce that <span
+class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
+<p>In either of the two cases to consider we have shown that <span
+class="math inline"><em>P</em>(<em>t</em>)</span> holds, hence <span
+class="math inline"><em>k</em> + 1</span> is tall.</p>
+<p>With the principle of mathematical induction all natural numbers
+besides 0 are tall.</p>
+<h3 id="structural-induction-1">Structural Induction</h3>
+<p>Notice that for all terms <span class="math inline"><em>t</em></span>
+we have for all of <span class="math inline"><em>t</em></span>s
+immediate subterms <span class="math inline"><em>r</em></span> <span
+class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>r</em>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span>.
+The result then follows by induction on size.</p>
 </body>
 </html>
