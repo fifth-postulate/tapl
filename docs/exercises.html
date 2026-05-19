@@ -424,5 +424,51 @@ class="math display"><em>T</em><sub><em>i</em> + 1</sub> = 3 + 3 �
 class="math inline">0, 3, 39, 59439, …</span>.</p>
 <p>So there are 59439 elements in <span
 class="math inline"><em>S</em><sub>3</sub></span>.</p>
+<h1 id="section-4">3.2.5</h1>
+<blockquote>
+<p>Show that the sets <span
+class="math inline"><em>S</em><sub><em>i</em></sub></span> are
+<em>cumulative</em>; that is, that for each <span
+class="math inline"><em>i</em></span> we have <span
+class="math inline"><em>S</em><sub><em>i</em></sub> ⊂ <em>S</em><sub><em>i</em> + 1</sub></span>.</p>
+</blockquote>
+<h2 id="proof-5">Proof</h2>
+<p>Call <span class="math inline"><em>k</em></span> frivolous if <span
+class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>.
+We will show that all numbers are frivolous.</p>
+<p>Since <span class="math inline"><em>S</em><sub>0</sub> = ⌀</span> and
+<span class="math inline">⌀ ⊂ <em>A</em></span> for any set <span
+class="math inline"><em>A</em></span>, in particular <span
+class="math inline"><em>S</em><sub>1</sub></span>, we see that 0 is
+frivolous.</p>
+<p>Assume that <span class="math inline"><em>k</em></span> is frivolous.
+We will show that <span class="math inline"><em>k</em> + 1</span> is
+frivolous as well. Let <span
+class="math inline"><em>s</em> ∈ <em>S</em><sub><em>k</em> + 1</sub></span>.
+There are three cases to consider</p>
+<ul>
+<li><span
+class="math inline"><em>s</em> ∈ {<em>t</em><em>r</em><em>u</em><em>e</em>, <em>f</em><em>a</em><em>l</em><em>s</em><em>e</em>, 0}</span>.
+By definition $sS_{k+2}.</li>
+<li>$s{succ t, pred t, iszero t |tS_{k}}. Since <span
+class="math inline"><em>k</em></span> is frivolous, i.e <span
+class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>,
+we see that</li>
+</ul>
+<p><span
+class="math display">{<em>s</em><em>u</em><em>c</em><em>c</em><em>t</em>, <em>p</em><em>r</em><em>e</em><em>d</em><em>t</em>, <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em><em>t</em>|<em>t</em>∈<em>S</em><sub><em>k</em></sub>}⊂{<em>s</em><em>u</em><em>c</em><em>c</em><em>t</em>,<em>p</em><em>r</em><em>e</em><em>d</em><em>t</em>,<em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em><em>t</em>|<em>t</em> ∈ <em>S</em><sub><em>k</em> + 1</sub>} ⊂ <em>S</em><sub><em>k</em> + 2</sub></span></p>
+<ul>
+<li>$s{if t_{1} then t_{2} else t_{3}|t_{1},t_{2},t_{3}S_{k}}. Since
+<span class="math inline"><em>k</em></span> is frivolous, i.e. <span
+class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>,
+we see that</li>
+</ul>
+<p><span
+class="math display">{<em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub>|<em>t</em><sub>1</sub>,<em>t</em><sub>2</sub>,<em>t</em><sub>3</sub>∈<em>S</em><sub><em>k</em></sub>}⊂{<em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub>|<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub> ∈ <em>S</em><sub><em>k</em> + 1</sub>} ⊂ <em>S</em><sub><em>k</em> + 2</sub></span></p>
+<p>In all cases <span
+class="math inline"><em>s</em> ∈ <em>S</em><sub><em>k</em> + 2</sub></span>,
+hence <span class="math inline"><em>k</em> + 1</span> is frivolous.</p>
+<p>By the principle of mathematical induction all numbers are
+frivolous.</p>
 </body>
 </html>
