@@ -30,22 +30,22 @@ suite =
             ]
         , describe "parse"
             [ parseTest { input = "O", expected = TmZero }
-            , parseTest { input = "T", expected = TmTrue }
-            , parseTest { input = "F", expected = TmFalse }
-            , parseTest { input = "SO", expected = TmSucc TmZero }
-            , parseTest { input = "PO", expected = TmPred TmZero }
-            , parseTest { input = "?SO", expected = TmIsZero (TmSucc TmZero) }
-            , parseTest { input = "(?SO)", expected = TmIsZero (TmSucc TmZero) }
-            , parseTest { input = "if(?SO)(SO)(O)", expected = TmIf (TmIsZero (TmSucc TmZero)) (TmSucc TmZero) TmZero }
+            , parseTest { input = "true", expected = TmTrue }
+            , parseTest { input = "false", expected = TmFalse }
+            , parseTest { input = "succO", expected = TmSucc TmZero }
+            , parseTest { input = "predO", expected = TmPred TmZero }
+            , parseTest { input = "iszerosuccO", expected = TmIsZero (TmSucc TmZero) }
+            , parseTest { input = "(iszerosuccO)", expected = TmIsZero (TmSucc TmZero) }
+            , parseTest { input = "if(iszerosuccO)then(succO)else(O)", expected = TmIf (TmIsZero (TmSucc TmZero)) (TmSucc TmZero) TmZero }
             ]
         , describe "print"
             [ printTest { input = TmZero, expected = "O" }
-            , printTest { input = TmTrue, expected = "T" }
-            , printTest { input = TmFalse, expected = "F" }
-            , printTest { input = TmSucc TmZero, expected = "S(O)" }
-            , printTest { input = TmPred TmZero, expected = "P(O)" }
-            , printTest { input = TmIsZero TmZero, expected = "?(O)" }
-            , printTest { input = TmIf (TmIsZero TmZero) TmZero (TmSucc TmZero), expected = "if(?(O))(O)(S(O))" }
+            , printTest { input = TmTrue, expected = "true" }
+            , printTest { input = TmFalse, expected = "false" }
+            , printTest { input = TmSucc TmZero, expected = "succ(O)" }
+            , printTest { input = TmPred TmZero, expected = "pred(O)" }
+            , printTest { input = TmIsZero TmZero, expected = "iszero(O)" }
+            , printTest { input = TmIf (TmIsZero TmZero) TmZero (TmSucc TmZero), expected = "if(iszero(O))then(O)else(succ(O))" }
             ]
         ]
 

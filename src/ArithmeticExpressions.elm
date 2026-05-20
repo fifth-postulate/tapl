@@ -155,33 +155,33 @@ zeroParser =
 
 trueParser : Parser Term
 trueParser =
-    Parser.character 'T'
+    Parser.word "true"
         |> Parser.map (always TmTrue)
 
 
 falseParser : Parser Term
 falseParser =
-    Parser.character 'F'
+    Parser.word "false"
         |> Parser.map (always TmFalse)
 
 
 succParser : Parser Term
 succParser =
-    Parser.character 'S'
+    Parser.word "succ"
         |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
         |> Parser.map TmSucc
 
 
 predParser : Parser Term
 predParser =
-    Parser.character 'P'
+    Parser.word "pred"
         |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
         |> Parser.map TmPred
 
 
 isZeroParser : Parser Term
 isZeroParser =
-    Parser.character '?'
+    Parser.word "iszero"
         |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
         |> Parser.map TmIsZero
 
@@ -195,7 +195,9 @@ ifParser =
     in
     Parser.word "if"
         |> Parser.ignoreThen eventuallyTerm
+        |> Parser.keepThenIgnore (Parser.word "then")
         |> Parser.followedBy eventuallyTerm
+        |> Parser.keepThenIgnore (Parser.word "else")
         |> Parser.followedBy eventuallyTerm
         |> Parser.map (\( ( guard, ifTrue ), ifFalse ) -> TmIf guard ifTrue ifFalse)
 
@@ -204,22 +206,22 @@ toString : Term -> String
 toString term =
     case term of
         TmTrue ->
-            "T"
+            "true"
 
         TmFalse ->
-            "F"
+            "false"
 
         TmZero ->
             "O"
 
         TmSucc t ->
-            "S(" ++ toString t ++ ")"
+            "succ(" ++ toString t ++ ")"
 
         TmPred t ->
-            "P(" ++ toString t ++ ")"
+            "pred(" ++ toString t ++ ")"
 
         TmIsZero t ->
-            "?(" ++ toString t ++ ")"
+            "iszero(" ++ toString t ++ ")"
 
         TmIf guard ifTrue ifFalse ->
-            "if(" ++ toString guard ++ ")(" ++ toString ifTrue ++ ")(" ++ toString ifFalse ++ ")"
+            "if(" ++ toString guard ++ ")then(" ++ toString ifTrue ++ ")else(" ++ toString ifFalse ++ ")"
