@@ -610,6 +610,11 @@ immediate subterms <span class="math inline"><em>r</em></span> <span
 class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>r</em>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span>.
 The result then follows by induction on size.</p>
 <h1 id="section-5">3.5.5</h1>
+<blockquote>
+<p>Spell out the induction principle used in the preceding proof, in the
+style of 3.3.4.</p>
+</blockquote>
+<h2 id="answer">Answer</h2>
 <p>The used principle of induction is <em>structural induction</em>.</p>
 <blockquote>
 <p>If for each term <span class="math inline"><em>s</em></span>, given
@@ -620,5 +625,19 @@ class="math inline"><em>P</em>(<em>s</em>)</span>, then <span
 class="math inline"><em>P</em>(<em>s</em>)</span> holds for all <span
 class="math inline"><em>s</em></span>.</p>
 </blockquote>
+<h1 id="section-6">3.5.10</h1>
+<p>Rephrase definition 3.5.9 as a set of inference rules.</p>
+<h2 id="answer-1">Answer</h2>
+<h3 id="closure">Closure</h3>
+<pre><code>t --&gt; t&#39;
+-------
+t --&gt;* t&#39;</code></pre>
+<h3 id="reflexive">Reflexive</h3>
+<pre><code>-------
+t --&gt;* t</code></pre>
+<h3 id="transitive">Transitive</h3>
+<pre><code>t --&gt;* t&#39;, t&#39; --&gt;* t&#39;&#39;
+----------------------
+t --&gt;* t&#39;&#39;</code></pre>
 </body>
 </html>
