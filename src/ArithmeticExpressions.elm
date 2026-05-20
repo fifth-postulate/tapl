@@ -1,6 +1,6 @@
 module ArithmeticExpressions exposing (Term(..), eval, fromInt, isNumerical, isValue, parse, toString)
 
-import Parser exposing (Parser)
+import Parser exposing (Parser, atleast, bracketed, character, ignoreThen, keepThenIgnore, many, or)
 
 
 type Term
@@ -168,21 +168,33 @@ falseParser =
 succParser : Parser Term
 succParser =
     Parser.word "succ"
-        |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
+        |> Parser.ignoreThen (appliedTo (Parser.lazy (\_ -> parser)))
         |> Parser.map TmSucc
+
+
+appliedTo : Parser a -> Parser a
+appliedTo argument =
+    or
+        (bracketed '(' ')' argument)
+        (atleast 1 space |> ignoreThen argument)
+
+
+space : Parser Char
+space =
+    character ' '
 
 
 predParser : Parser Term
 predParser =
     Parser.word "pred"
-        |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
+        |> Parser.ignoreThen (appliedTo (Parser.lazy (\_ -> parser)))
         |> Parser.map TmPred
 
 
 isZeroParser : Parser Term
 isZeroParser =
     Parser.word "iszero"
-        |> Parser.ignoreThen (Parser.lazy (\_ -> parser))
+        |> Parser.ignoreThen (appliedTo (Parser.lazy (\_ -> parser)))
         |> Parser.map TmIsZero
 
 
@@ -191,14 +203,19 @@ ifParser =
     let
         eventuallyTerm : Parser Term
         eventuallyTerm =
-            Parser.lazy (\_ -> parser)
+            appliedTo (Parser.lazy (\_ -> parser))
+                |> keepThenIgnore (many space)
+
+        eventuallyLastTerm : Parser Term
+        eventuallyLastTerm =
+            appliedTo (Parser.lazy (\_ -> parser))
     in
     Parser.word "if"
         |> Parser.ignoreThen eventuallyTerm
         |> Parser.keepThenIgnore (Parser.word "then")
         |> Parser.followedBy eventuallyTerm
         |> Parser.keepThenIgnore (Parser.word "else")
-        |> Parser.followedBy eventuallyTerm
+        |> Parser.followedBy eventuallyLastTerm
         |> Parser.map (\( ( guard, ifTrue ), ifFalse ) -> TmIf guard ifTrue ifFalse)
 
 

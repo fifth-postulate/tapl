@@ -32,11 +32,13 @@ suite =
             [ parseTest { input = "O", expected = TmZero }
             , parseTest { input = "true", expected = TmTrue }
             , parseTest { input = "false", expected = TmFalse }
-            , parseTest { input = "succO", expected = TmSucc TmZero }
-            , parseTest { input = "predO", expected = TmPred TmZero }
-            , parseTest { input = "iszerosuccO", expected = TmIsZero (TmSucc TmZero) }
-            , parseTest { input = "(iszerosuccO)", expected = TmIsZero (TmSucc TmZero) }
-            , parseTest { input = "if(iszerosuccO)then(succO)else(O)", expected = TmIf (TmIsZero (TmSucc TmZero)) (TmSucc TmZero) TmZero }
+            , parseTest { input = "succ(O)", expected = TmSucc TmZero }
+            , parseTest { input = "succ O", expected = TmSucc TmZero }
+            , parseTest { input = "pred(O)", expected = TmPred TmZero }
+            , parseTest { input = "pred O", expected = TmPred TmZero }
+            , parseTest { input = "iszero(succ O)", expected = TmIsZero (TmSucc TmZero) }
+            , parseTest { input = "(iszero(succ O))", expected = TmIsZero (TmSucc TmZero) }
+            , parseTest { input = "if iszero succ(O) then succ O else O", expected = TmIf (TmIsZero (TmSucc TmZero)) (TmSucc TmZero) TmZero }
             ]
         , describe "print"
             [ printTest { input = TmZero, expected = "O" }

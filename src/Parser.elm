@@ -1,4 +1,4 @@
-module Parser exposing (Parser, bracketed, character, followedBy, ignoreThen, keepThenIgnore, lazy, many, map, or, ors, word)
+module Parser exposing (Parser, atleast, bracketed, character, followedBy, ignoreThen, keepThenIgnore, lazy, many, map, or, ors, word)
 
 import List exposing (concat)
 
@@ -78,6 +78,24 @@ many parser =
                 |> map (\( head, tail ) -> head :: tail)
     in
     or tryParser (succeed [])
+
+
+atleast : Int -> Parser a -> Parser (List a)
+atleast n parser =
+    repeat n parser
+        |> followedBy (many parser)
+        |> map (\( first, second ) -> first ++ second)
+
+
+repeat : Int -> Parser a -> Parser (List a)
+repeat n parser =
+    if n <= 0 then
+        succeed []
+
+    else
+        parser
+            |> followedBy (lazy (\_ -> repeat (n - 1) parser))
+            |> map (\( head, tail ) -> head :: tail)
 
 
 lazy : (() -> Parser a) -> Parser a

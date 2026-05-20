@@ -1,7 +1,7 @@
 module ParserTest exposing (suite)
 
 import Expect exposing (Expectation)
-import Parser exposing (Parser, character, followedBy, ignoreThen, keepThenIgnore, many, or, word)
+import Parser exposing (Parser, atleast, character, followedBy, ignoreThen, keepThenIgnore, many, or, word)
 import Test exposing (..)
 
 
@@ -73,6 +73,12 @@ suite =
             , parser = many (character 'a')
             , on = "aab"
             , expected = [ ( "b", [ 'a', 'a' ] ), ( "ab", [ 'a' ] ), ( "aab", [] ) ]
+            }
+        , verify
+            { description = "atleast 1 test 1"
+            , parser = atleast 2 (character 'a')
+            , on = "aaaab"
+            , expected = [ ( "b", [ 'a', 'a', 'a', 'a' ] ), ( "ab", [ 'a', 'a', 'a' ] ), ( "aab", [ 'a', 'a' ] ) ]
             }
         ]
 
