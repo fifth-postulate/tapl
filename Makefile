@@ -4,7 +4,7 @@ SOURCE_DIR=src
 RESOURCE_DIR=docs
 EXERCISES=${RESOURCE_DIR}/exercises.html
 JAVASCRIPT_DIR=${RESOURCE_DIR}/js/elm
-MODULI=ProjectArithmeticExpressions
+MODULI=ProjectArithmeticExpressions ProjectUntypedLambdaCalculus
 MINIFIED_TARGETS=$(MODULI:%=${JAVASCRIPT_DIR}/%.min.js)
 
 all: ${MINIFIED_TARGETS} ${EXERCISES}
