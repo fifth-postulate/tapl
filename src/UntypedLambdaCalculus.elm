@@ -1,4 +1,6 @@
-module UntypedLambdaCalculus exposing (Term(..), eval, parse, toString)
+module UntypedLambdaCalculus exposing (Term(..), empty, parse, step, toString)
+
+import General exposing (Continue(..))
 
 
 type Term
@@ -144,12 +146,7 @@ isValue _ term =
             False
 
 
-type Continue
-    = Progressed Term
-    | Stalled
-
-
-step : Context -> Term -> Continue
+step : Context -> Term -> Continue Term
 step context term =
     case term of
         TmApp ((TmAbs _ t11) as t1) t2 ->
@@ -177,16 +174,6 @@ step context term =
 
         _ ->
             Stalled
-
-
-eval : Term -> Term
-eval term =
-    case step empty term of
-        Progressed t ->
-            eval t
-
-        Stalled ->
-            term
 
 
 parse : String -> Maybe Term

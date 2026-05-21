@@ -1,7 +1,8 @@
 module ProjectUntypedLambdaCalculus exposing (main)
 
+import General
 import GenericPage
-import UntypedLambdaCalculus as Expression
+import UntypedLambdaCalculus as Expression exposing (empty)
 
 
 main =
@@ -9,5 +10,5 @@ main =
         { title = "Untyped Lambda Calculus"
         , parse = Expression.parse
         , printer = Expression.toString
-        , evaluator = Expression.eval
+        , evaluator = General.eval (Expression.step empty)
         }

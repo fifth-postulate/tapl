@@ -1,6 +1,7 @@
 module ProjectArithmeticExpressions exposing (main)
 
 import ArithmeticExpressions as Expression
+import General
 import GenericPage
 
 
@@ -9,5 +10,5 @@ main =
         { title = "Arithmetic Expression"
         , parse = Expression.parse
         , printer = Expression.toString
-        , evaluator = Expression.eval
+        , evaluator = General.eval Expression.step
         }

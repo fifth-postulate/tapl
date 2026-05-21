@@ -1,5 +1,6 @@
-module ArithmeticExpressions exposing (Term(..), eval, fromInt, isNumerical, isValue, parse, toString)
+module ArithmeticExpressions exposing (Term(..), fromInt, isNumerical, isValue, parse, step, toString)
 
+import General exposing (Continue(..))
 import Parser exposing (Parser, atleast, bracketed, character, ignoreThen, keepThenIgnore, many, or)
 
 
@@ -44,12 +45,7 @@ isValue term =
             isNumerical term
 
 
-type Continue
-    = Progressed Term
-    | Stalled
-
-
-step : Term -> Continue
+step : Term -> Continue Term
 step term =
     case term of
         TmIf TmTrue t _ ->
@@ -112,16 +108,6 @@ step term =
 
         _ ->
             Stalled
-
-
-eval : Term -> Term
-eval term =
-    case step term of
-        Progressed t ->
-            eval t
-
-        Stalled ->
-            term
 
 
 parse : String -> Maybe Term
