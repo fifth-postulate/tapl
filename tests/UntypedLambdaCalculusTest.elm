@@ -14,9 +14,14 @@ suite =
             ]
         , describe "eval"
             [ evalTest { input = TmVar 0 1, expected = TmVar 0 1 }
+            , evalTest { input = TmApp (TmAbs "x" (TmVar 0 1)) (TmAbs "y" (TmVar 0 1)), expected = TmAbs "y" (TmVar 0 1) }
             ]
         , describe "parse"
             [ parseTest { input = "x", expected = TmVar 0 1 }
+            , parseTest { input = "y", expected = TmVar 0 1 }
+            , parseTest { input = "lambda x. x", expected = TmAbs "x" (TmVar 0 1) }
+            , parseTest { input = "lambda x . x", expected = TmAbs "x" (TmVar 0 1) }
+            , parseTest { input = "lambda y. y", expected = TmAbs "y" (TmVar 0 1) }
             ]
         , describe "print"
             [ printTest { input = TmVar 0 1, expected = "[bad index]" }

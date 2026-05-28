@@ -1,4 +1,4 @@
-module Parser exposing (Parser, atleast, bracketed, character, followedBy, ignoreThen, keepThenIgnore, lazy, many, map, or, ors, word)
+module Parser exposing (Parser, atleast, bracketed, character, characterClass, complete, followedBy, ignoreThen, keepThenIgnore, lazy, many, map, or, ors, word)
 
 import List exposing (concat)
 
@@ -11,6 +11,41 @@ character : Char -> Parser Char
 character needle =
     word (String.fromChar needle)
         |> map (always needle)
+
+
+characterClass : Char -> Char -> Parser Char
+characterClass minimum maximum =
+    let
+        mini =
+            Char.toCode minimum
+
+        maxi =
+            Char.toCode maximum
+
+        withinRange : Char -> Bool
+        withinRange c =
+            let
+                code =
+                    Char.toCode c
+            in
+            mini <= code && code <= maxi
+    in
+    predicate withinRange
+
+
+predicate : (Char -> Bool) -> Parser Char
+predicate p input =
+    case String.uncons input of
+        Just ( head, tail ) ->
+            if p head then
+                ( tail, head )
+                    |> List.singleton
+
+            else
+                []
+
+        Nothing ->
+            []
 
 
 word : String -> Parser String
@@ -118,3 +153,10 @@ bracketed left right parser =
     character left
         |> ignoreThen parser
         |> keepThenIgnore (character right)
+
+
+complete : Parser a -> Parser a
+complete parser input =
+    input
+        |> parser
+        |> List.filter (Tuple.first >> String.isEmpty)

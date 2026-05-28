@@ -1,7 +1,7 @@
-module UntypedLambdaCalculus exposing (Term(..), empty, isValue, parse, step, toString)
+module UntypedLambdaCalculus exposing (Term(..), empty, isValue, parse, parser, step, toString)
 
 import General exposing (Continue(..))
-import Parser exposing (Parser, character)
+import Parser exposing (Parser, atleast, character, characterClass, complete, many, word)
 
 
 type Term
@@ -179,7 +179,7 @@ step context term =
 
 parse : String -> Maybe Term
 parse input =
-    case parser input of
+    case complete parser input of
         ( _, h ) :: _ ->
             Just h
 
@@ -189,11 +189,39 @@ parse input =
 
 parser : Parser Term
 parser =
-    Parser.ors variableParser
-        []
+    Parser.ors abstractionParser
+        [ variableParser ]
 
 
 variableParser : Parser Term
 variableParser =
-    character 'x'
+    identifier
         |> Parser.map (always (TmVar 0 1))
+
+
+identifier : Parser String
+identifier =
+    characterClass 'a' 'z'
+        |> Parser.map String.fromChar
+
+
+abstractionParser : Parser Term
+abstractionParser =
+    word "lambda"
+        |> Parser.ignoreThen (atleast 1 space)
+        |> Parser.ignoreThen identifier
+        |> Parser.keepThenIgnore dot
+        |> Parser.followedBy (Parser.lazy (\_ -> parser))
+        |> Parser.map (\( id, term ) -> TmAbs id term)
+
+
+space : Parser Char
+space =
+    character ' '
+
+
+dot : Parser Char
+dot =
+    many space
+        |> Parser.ignoreThen (character '.')
+        |> Parser.keepThenIgnore (many space)
