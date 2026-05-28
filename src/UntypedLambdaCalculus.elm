@@ -1,6 +1,7 @@
-module UntypedLambdaCalculus exposing (Term(..), empty, parse, step, toString)
+module UntypedLambdaCalculus exposing (Term(..), empty, isValue, parse, step, toString)
 
 import General exposing (Continue(..))
+import Parser exposing (Parser, character)
 
 
 type Term
@@ -177,5 +178,22 @@ step context term =
 
 
 parse : String -> Maybe Term
-parse _ =
-    Nothing
+parse input =
+    case parser input of
+        ( _, h ) :: _ ->
+            Just h
+
+        [] ->
+            Nothing
+
+
+parser : Parser Term
+parser =
+    Parser.ors variableParser
+        []
+
+
+variableParser : Parser Term
+variableParser =
+    character 'x'
+        |> Parser.map (always (TmVar 0 1))

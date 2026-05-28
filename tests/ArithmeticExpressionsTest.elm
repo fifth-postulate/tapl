@@ -1,7 +1,8 @@
 module ArithmeticExpressionsTest exposing (suite)
 
-import ArithmeticExpressions as Expression exposing (Term(..), eval, isNumerical, isValue, parse)
+import ArithmeticExpressions as Expression exposing (Term(..), isNumerical, isValue, parse)
 import Expect exposing (Expectation)
+import General
 import Test exposing (..)
 
 
@@ -115,7 +116,7 @@ evalTest testCase =
             let
                 actual =
                     testCase.input
-                        |> eval
+                        |> General.eval Expression.step
             in
             Expect.equal actual testCase.expected
 
