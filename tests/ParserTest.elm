@@ -1,5 +1,6 @@
 module ParserTest exposing (suite)
 
+import Dict exposing (Dict)
 import Expect
 import Parser exposing (Parser, atleast, character, characterClass, complete, followedBy, ignoreThen, keepThenIgnore, many, or, word)
 import Test exposing (..)
@@ -127,7 +128,42 @@ suite =
             , context = ()
             , expected = [ ( (), "", [ 'a', 'a', 'a' ] ) ]
             }
+        , verify
+            { description = "update context test 1"
+            , parser = many (character 'a' |> Parser.updateContext (\n -> n + 1))
+            , on = "aaa"
+            , context = 0
+            , expected = [ ( 3, "", [ 'a', 'a', 'a' ] ), ( 2, "a", [ 'a', 'a' ] ), ( 1, "aa", [ 'a' ] ), ( 0, "aaa", [] ) ]
+            }
+        , verify
+            { description = "update context test 2"
+            , parser = many (character 'b' |> Parser.updateContext (\n -> n + 1))
+            , on = "b"
+            , context = 0
+            , expected = [ ( 1, "", [ 'b' ] ), ( 0, "b", [] ) ]
+            }
+        , verify
+            { description = "modify context test 1"
+            , parser = complete (many (tally (Parser.or (character 'a') (character 'b'))))
+            , on = "abaab"
+            , context = Dict.empty
+            , expected = [ ( Dict.fromList [ ( 'a', 3 ), ( 'b', 2 ) ], "", [ 'a', 'b', 'a', 'a', 'b' ] ) ]
+            }
         ]
+
+
+tally : Parser (Dict Char Int) Char -> Parser (Dict Char Int) Char
+tally parser =
+    let
+        inc : Maybe Int -> Maybe Int
+        inc v =
+            v
+                |> Maybe.map (\n -> n + 1)
+                |> Maybe.withDefault 1
+                |> Just
+    in
+    parser
+        |> Parser.modifyContext (\a c -> Dict.update a inc c)
 
 
 type alias ParserTestCase c a =

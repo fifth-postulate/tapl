@@ -2,6 +2,7 @@ module UntypedLambdaCalculusTest exposing (suite)
 
 import Expect exposing (Expectation)
 import General
+import Parser
 import Test exposing (..)
 import UntypedLambdaCalculus as Expression exposing (Binding(..), Context, Term(..), default, empty, isValue, parse)
 
@@ -18,15 +19,15 @@ suite =
             , evalTest { input = TmApp (TmAbs "x" (TmVar 0 1)) (TmAbs "y" (TmVar 0 1)), expected = TmAbs "y" (TmVar 0 1) }
             ]
         , describe "parse"
-            [ parseTest { input = "x", context = empty, expected = TmVar 0 1 }
-            , parseTest { input = "y", context = empty, expected = TmVar 0 1 }
+            [ parseTest { input = "x", context = [ ( "x", NameBind ) ], expected = TmVar 0 1 }
+            , parseTest { input = "y", context = [ ( "x", NameBind ), ( "y", NameBind ) ], expected = TmVar 1 2 }
             , parseTest { input = "lambda x. x", context = empty, expected = TmAbs "x" (TmVar 0 1) }
             , parseTest { input = "lambda x . x", context = empty, expected = TmAbs "x" (TmVar 0 1) }
             , parseTest { input = "lambda y. y", context = empty, expected = TmAbs "y" (TmVar 0 1) }
             , parseTest { input = "(lambda y. y)", context = empty, expected = TmAbs "y" (TmVar 0 1) }
             , parseTest { input = "(lambda y. y) (lambda x. x)", context = empty, expected = TmApp (TmAbs "y" (TmVar 0 1)) (TmAbs "x" (TmVar 0 1)) }
             , parseTest { input = "(lambda y. y) (lambda y. y)", context = empty, expected = TmApp (TmAbs "y" (TmVar 0 1)) (TmAbs "y" (TmVar 0 1)) }
-            , parseTest { input = "(lambda x. (x) y) (lambda y. y)", context = empty, expected = TmApp (TmAbs "x" (TmApp (TmVar 0 1) (TmVar 1 1))) (TmAbs "y" (TmVar 0 1)) }
+            , parseTest { input = "(lambda x. (x) y) (lambda y. y)", context = [ ( "y", NameBind ) ], expected = TmApp (TmAbs "x" (TmApp (TmVar 0 2) (TmVar 1 2))) (TmAbs "y" (TmVar 0 2)) }
             ]
         , describe "print"
             [ printTest { input = TmVar 0 1, context = default, expected = "x" }
@@ -91,7 +92,7 @@ parseTest testCase =
         \_ ->
             let
                 actual =
-                    parse testCase.input
+                    parse testCase.context testCase.input
             in
             Expect.equal actual (Just testCase.expected)
 

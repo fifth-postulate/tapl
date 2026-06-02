@@ -1,4 +1,4 @@
-module Parser exposing (Parser, atleast, bracketed, character, characterClass, complete, followedBy, ignoreThen, keepThenIgnore, lazy, many, map, or, ors, word)
+module Parser exposing (Parser, alter, atleast, bracketed, character, characterClass, complete, followedBy, ignoreThen, keepThenIgnore, lazy, many, map, modifyContext, or, ors, scoped, updateContext, word)
 
 import List exposing (concat)
 
@@ -160,3 +160,36 @@ complete parser context input =
     input
         |> parser context
         |> List.filter (\( _, s, _ ) -> String.isEmpty s)
+
+
+updateContext : (c -> c) -> Parser c a -> Parser c a
+updateContext f parser context input =
+    input
+        |> parser context
+        |> List.map (\( c, s, a ) -> ( f c, s, a ))
+
+
+modifyContext : (a -> c -> c) -> Parser c a -> Parser c a
+modifyContext f parser context input =
+    input
+        |> parser context
+        |> List.map (\( c, s, a ) -> ( f a c, s, a ))
+
+
+alter : (c -> a -> b) -> Parser c a -> Parser c b
+alter f parser context input =
+    input
+        |> parser context
+        |> List.map
+            (\( c, s, a ) ->
+                let
+                    b =
+                        f c a
+                in
+                ( c, s, b )
+            )
+
+
+scoped : Parser c a -> Parser c a
+scoped parser context input =
+    updateContext (always context) parser context input

@@ -79,6 +79,15 @@ index2name context index =
             Nothing
 
 
+name2index : Context -> String -> Maybe Int
+name2index context name =
+    context
+        |> List.indexedMap Tuple.pair
+        |> List.filter (\( _, ( candidate, _ ) ) -> candidate == name)
+        |> List.map Tuple.first
+        |> List.head
+
+
 format : Context -> Term -> String
 format context term =
     case term of
@@ -189,9 +198,9 @@ step context term =
             Stalled
 
 
-parse : String -> Maybe Term
-parse input =
-    case complete parser empty input of
+parse : Context -> String -> Maybe Term
+parse context input =
+    case complete parser context input of
         ( _, _, h ) :: _ ->
             Just h
 
@@ -201,7 +210,7 @@ parse input =
 
 parser : Parser Context Term
 parser =
-    Parser.ors abstractionParser
+    Parser.ors (Parser.scoped abstractionParser)
         [ variableParser
         , applicationParser
         , Parser.bracketed '(' ')' (Parser.lazy (\_ -> parser))
@@ -210,8 +219,19 @@ parser =
 
 variableParser : Parser Context Term
 variableParser =
+    let
+        toTmVar : Context -> String -> Term
+        toTmVar context name =
+            case name2index context name of
+                Just index ->
+                    TmVar index (List.length context)
+
+                Nothing ->
+                    -- TODO what if the name is not in the context
+                    TmVar -1 -1
+    in
     identifier
-        |> Parser.map (always (TmVar 0 1))
+        |> Parser.alter toTmVar
 
 
 identifier : Parser Context String
@@ -224,7 +244,7 @@ abstractionParser : Parser Context Term
 abstractionParser =
     word "lambda"
         |> Parser.ignoreThen (atleast 1 space)
-        |> Parser.ignoreThen identifier
+        |> Parser.ignoreThen (Parser.modifyContext (\a c -> ( a, NameBind ) :: c) identifier)
         |> Parser.keepThenIgnore dot
         |> Parser.followedBy (Parser.lazy (\_ -> parser))
         |> Parser.map (\( id, term ) -> TmAbs id term)
