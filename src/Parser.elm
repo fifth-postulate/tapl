@@ -3,17 +3,17 @@ module Parser exposing (Parser, atleast, bracketed, character, characterClass, c
 import List exposing (concat)
 
 
-type alias Parser a =
-    String -> List ( String, a )
+type alias Parser c a =
+    c -> String -> List ( c, String, a )
 
 
-character : Char -> Parser Char
+character : Char -> Parser c Char
 character needle =
     word (String.fromChar needle)
         |> map (always needle)
 
 
-characterClass : Char -> Char -> Parser Char
+characterClass : Char -> Char -> Parser c Char
 characterClass minimum maximum =
     let
         mini =
@@ -33,12 +33,12 @@ characterClass minimum maximum =
     predicate withinRange
 
 
-predicate : (Char -> Bool) -> Parser Char
-predicate p input =
+predicate : (Char -> Bool) -> Parser c Char
+predicate p context input =
     case String.uncons input of
         Just ( head, tail ) ->
             if p head then
-                ( tail, head )
+                ( context, tail, head )
                     |> List.singleton
 
             else
@@ -48,63 +48,63 @@ predicate p input =
             []
 
 
-word : String -> Parser String
-word target input =
+word : String -> Parser c String
+word target context input =
     if String.startsWith target input then
-        ( String.dropLeft (String.length target) input, target )
+        ( context, String.dropLeft (String.length target) input, target )
             |> List.singleton
 
     else
         []
 
 
-map : (a -> b) -> Parser a -> Parser b
-map f parser input =
+map : (a -> b) -> Parser c a -> Parser c b
+map f parser context input =
     input
-        |> parser
-        |> List.map (Tuple.mapSecond f)
+        |> parser context
+        |> List.map (\( c, s, a ) -> ( c, s, f a ))
 
 
-followedBy : Parser b -> Parser a -> Parser ( a, b )
-followedBy second first input =
+followedBy : Parser c b -> Parser c a -> Parser c ( a, b )
+followedBy second first context input =
     let
-        proceedWithSecond : ( String, a ) -> List ( String, ( a, b ) )
-        proceedWithSecond ( rest, result ) =
+        proceedWithSecond : ( c, String, a ) -> List ( c, String, ( a, b ) )
+        proceedWithSecond ( ctx, rest, result ) =
             rest
-                |> second
-                |> List.map (Tuple.mapSecond (Tuple.pair result))
+                |> second ctx
+                |> List.map (\( c, s, b ) -> ( c, s, ( result, b ) ))
     in
     input
-        |> first
+        |> first context
         |> List.map proceedWithSecond
         |> concat
 
 
-ignoreThen : Parser b -> Parser a -> Parser b
+ignoreThen : Parser c b -> Parser c a -> Parser c b
 ignoreThen second first =
     first
         |> followedBy second
         |> map Tuple.second
 
 
-keepThenIgnore : Parser b -> Parser a -> Parser a
+keepThenIgnore : Parser c b -> Parser c a -> Parser c a
 keepThenIgnore second first =
     first
         |> followedBy second
         |> map Tuple.first
 
 
-or : Parser a -> Parser a -> Parser a
-or left right input =
-    List.concat [ left input, right input ]
+or : Parser c a -> Parser c a -> Parser c a
+or left right context input =
+    List.concat [ left context input, right context input ]
 
 
-ors : Parser a -> List (Parser a) -> Parser a
+ors : Parser c a -> List (Parser c a) -> Parser c a
 ors head tail =
     List.foldl or head tail
 
 
-many : Parser a -> Parser (List a)
+many : Parser c a -> Parser c (List a)
 many parser =
     let
         tryParser =
@@ -115,14 +115,14 @@ many parser =
     or tryParser (succeed [])
 
 
-atleast : Int -> Parser a -> Parser (List a)
+atleast : Int -> Parser c a -> Parser c (List a)
 atleast n parser =
     repeat n parser
         |> followedBy (many parser)
         |> map (\( first, second ) -> first ++ second)
 
 
-repeat : Int -> Parser a -> Parser (List a)
+repeat : Int -> Parser c a -> Parser c (List a)
 repeat n parser =
     if n <= 0 then
         succeed []
@@ -133,30 +133,30 @@ repeat n parser =
             |> map (\( head, tail ) -> head :: tail)
 
 
-lazy : (() -> Parser a) -> Parser a
-lazy produce input =
-    produce () input
+lazy : (() -> Parser c a) -> Parser c a
+lazy produce context input =
+    produce () context input
 
 
-succeed : a -> Parser a
-succeed a input =
-    [ ( input, a ) ]
+succeed : a -> Parser c a
+succeed a context input =
+    [ ( context, input, a ) ]
 
 
-fail : Parser a
-fail _ =
+fail : Parser c a
+fail _ _ =
     []
 
 
-bracketed : Char -> Char -> Parser a -> Parser a
+bracketed : Char -> Char -> Parser c a -> Parser c a
 bracketed left right parser =
     character left
         |> ignoreThen parser
         |> keepThenIgnore (character right)
 
 
-complete : Parser a -> Parser a
-complete parser input =
+complete : Parser c a -> Parser c a
+complete parser context input =
     input
-        |> parser
-        |> List.filter (Tuple.first >> String.isEmpty)
+        |> parser context
+        |> List.filter (\( _, s, _ ) -> String.isEmpty s)

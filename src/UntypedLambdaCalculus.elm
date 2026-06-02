@@ -191,15 +191,15 @@ step context term =
 
 parse : String -> Maybe Term
 parse input =
-    case complete parser input of
-        ( _, h ) :: _ ->
+    case complete parser empty input of
+        ( _, _, h ) :: _ ->
             Just h
 
         [] ->
             Nothing
 
 
-parser : Parser Term
+parser : Parser Context Term
 parser =
     Parser.ors abstractionParser
         [ variableParser
@@ -208,19 +208,19 @@ parser =
         ]
 
 
-variableParser : Parser Term
+variableParser : Parser Context Term
 variableParser =
     identifier
         |> Parser.map (always (TmVar 0 1))
 
 
-identifier : Parser String
+identifier : Parser Context String
 identifier =
     characterClass 'a' 'z'
         |> Parser.map String.fromChar
 
 
-abstractionParser : Parser Term
+abstractionParser : Parser Context Term
 abstractionParser =
     word "lambda"
         |> Parser.ignoreThen (atleast 1 space)
@@ -230,19 +230,19 @@ abstractionParser =
         |> Parser.map (\( id, term ) -> TmAbs id term)
 
 
-space : Parser Char
+space : Parser Context Char
 space =
     character ' '
 
 
-dot : Parser Char
+dot : Parser Context Char
 dot =
     many space
         |> Parser.ignoreThen (character '.')
         |> Parser.keepThenIgnore (many space)
 
 
-applicationParser : Parser Term
+applicationParser : Parser Context Term
 applicationParser =
     let
         eventuallyTerm =

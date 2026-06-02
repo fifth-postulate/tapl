@@ -112,15 +112,15 @@ step term =
 
 parse : String -> Maybe Term
 parse input =
-    case parser input of
-        ( _, h ) :: _ ->
+    case parser () input of
+        ( _, _, h ) :: _ ->
             Just h
 
         [] ->
             Nothing
 
 
-parser : Parser Term
+parser : Parser () Term
 parser =
     Parser.ors zeroParser
         [ trueParser
@@ -133,66 +133,66 @@ parser =
         ]
 
 
-zeroParser : Parser Term
+zeroParser : Parser () Term
 zeroParser =
     Parser.character 'O'
         |> Parser.map (always TmZero)
 
 
-trueParser : Parser Term
+trueParser : Parser () Term
 trueParser =
     Parser.word "true"
         |> Parser.map (always TmTrue)
 
 
-falseParser : Parser Term
+falseParser : Parser () Term
 falseParser =
     Parser.word "false"
         |> Parser.map (always TmFalse)
 
 
-succParser : Parser Term
+succParser : Parser () Term
 succParser =
     Parser.word "succ"
         |> Parser.ignoreThen (appliedTo (Parser.lazy (\_ -> parser)))
         |> Parser.map TmSucc
 
 
-appliedTo : Parser a -> Parser a
+appliedTo : Parser () a -> Parser () a
 appliedTo argument =
     or
         (bracketed '(' ')' argument)
         (atleast 1 space |> ignoreThen argument)
 
 
-space : Parser Char
+space : Parser () Char
 space =
     character ' '
 
 
-predParser : Parser Term
+predParser : Parser () Term
 predParser =
     Parser.word "pred"
         |> Parser.ignoreThen (appliedTo (Parser.lazy (\_ -> parser)))
         |> Parser.map TmPred
 
 
-isZeroParser : Parser Term
+isZeroParser : Parser () Term
 isZeroParser =
     Parser.word "iszero"
         |> Parser.ignoreThen (appliedTo (Parser.lazy (\_ -> parser)))
         |> Parser.map TmIsZero
 
 
-ifParser : Parser Term
+ifParser : Parser () Term
 ifParser =
     let
-        eventuallyTerm : Parser Term
+        eventuallyTerm : Parser () Term
         eventuallyTerm =
             appliedTo (Parser.lazy (\_ -> parser))
                 |> keepThenIgnore (many space)
 
-        eventuallyLastTerm : Parser Term
+        eventuallyLastTerm : Parser () Term
         eventuallyLastTerm =
             appliedTo (Parser.lazy (\_ -> parser))
     in
