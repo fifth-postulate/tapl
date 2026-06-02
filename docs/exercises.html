@@ -626,7 +626,9 @@ class="math inline"><em>P</em>(<em>s</em>)</span> holds for all <span
 class="math inline"><em>s</em></span>.</p>
 </blockquote>
 <h1 id="section-6">3.5.10</h1>
+<blockquote>
 <p>Rephrase definition 3.5.9 as a set of inference rules.</p>
+</blockquote>
 <h2 id="answer-1">Answer</h2>
 <h3 id="closure">Closure</h3>
 <pre><code>t --&gt; t&#39;
@@ -639,5 +641,105 @@ t --&gt;* t</code></pre>
 <pre><code>t --&gt;* t&#39;, t&#39; --&gt;* t&#39;&#39;
 ----------------------
 t --&gt;* t&#39;&#39;</code></pre>
+<h1 id="section-7">3.5.13</h1>
+<h2 id="part-1">Part 1</h2>
+<blockquote>
+<p>Suppose we add a new rule</p>
+<pre><code>if true then t2 else t3 -&gt; t3</code></pre>
+<p>to the ones in Figure 3-1. Which of the above theorems (3.5.4, 3.5.7,
+3.5.8, 3.5.11 and 3.5.12) remain valid.</p>
+</blockquote>
+<h3 id="section-8">3.5.4</h3>
+<blockquote>
+<p><em>Determinacy of one-step evaluation</em>: if <span
+class="math inline"><em>t</em> → <em>t</em><sub>1</sub></span> and <span
+class="math inline"><em>t</em> → <em>t</em><sub>2</sub></span> then
+<span
+class="math inline"><em>t</em><sub>1</sub> = <em>t</em><sub>2</sub></span>.</p>
+</blockquote>
+<p>This isn’t valid anymore since
+<code>if true then O else succ O</code> had no two one step that are
+different, i.e. <code>O</code> and <code>succ O</code>.</p>
+<h3 id="section-9">3.5.7</h3>
+<blockquote>
+<p>Every value is in a normal form.</p>
+</blockquote>
+<p>This remains true. The values are <code>true</code> and
+<code>false</code> and the new rule does not apply to it.</p>
+<h3 id="section-10">3.5.8</h3>
+<blockquote>
+<p>If <code>t</code> is in normal form, then <code>t</code> is a
+value.</p>
+</blockquote>
+<p>This remains true.</p>
+<h3 id="section-11">3.5.11</h3>
+<blockquote>
+<p><em>uniqueness of normal forms</em>: if <span
+class="math inline"><em>t</em> →  * <em>u</em></span> and <span
+class="math inline"><em>t</em> →  * <em>v</em></span>, where <span
+class="math inline"><em>u</em></span> and <span
+class="math inline"><em>v</em></span> are both normal forms then <span
+class="math inline"><em>u</em> = <em>v</em></span>.</p>
+</blockquote>
+<p>This is invalid. Consequence of the invalidation of the
+<em>determinancy of one-step evaluation</em> under the new rule.</p>
+<h3 id="section-12">3.5.12</h3>
+<blockquote>
+<p><em>Termination of evaluation</em>: for every term <span
+class="math inline"><em>t</em></span> there is some normal form <span
+class="math inline"><em>u</em></span> such that <span
+class="math inline"><em>t</em> →  * <em>u</em></span>.</p>
+</blockquote>
+<p>This remains valid. It isn’t unique anymore though.</p>
+<h2 id="part-2">Part 2</h2>
+<blockquote>
+<p>Suppose instead that we add this rule:</p>
+<pre><code>t_2 --&gt; u
+----------------------------
+if t_1 then t_2 else t_3 --&gt; if t_1 then u else t_3</code></pre>
+<p>Now which of the above theorems remain valid? Do any of the proofs
+need to change?</p>
+</blockquote>
+<h3 id="section-13">3.5.4</h3>
+<p>Theorem 3.5.4 is invalid. Multiple evaluation rules could apply, for
+example</p>
+<pre><code>if true then (if false then true else false) else false</code></pre>
+<p>could evaluate under the original rules to</p>
+<pre><code>if false then true else false</code></pre>
+<p>or with the new rule</p>
+<pre><code>if true then false else false</code></pre>
+<h3 id="section-14">3.5.7</h3>
+<p>This remains valid. The proof is essentially the same.</p>
+<h3 id="section-15">3.5.8</h3>
+<p>This remains valid. The proof is also essentially the same.</p>
+<h3 id="section-16">3.5.11</h3>
+<p>This remains valid, The proof is different because the determinancy
+of single-step evaluation is invalid with the new rule.</p>
+<h3 id="section-17">3.5.12</h3>
+<p>This remains valid as well. The proof is the same.</p>
+<h1 id="section-18">3.5.14</h1>
+<blockquote>
+<p>Show that Theorem 3.5.4 is also valid for the evaluation relation on
+arithmetic expressions: if <span
+class="math inline"><em>t</em> → <em>u</em></span> and <span
+class="math inline"><em>t</em> → <em>v</em></span> then <span
+class="math inline"><em>u</em> = <em>v</em></span>.</p>
+</blockquote>
+<h2 id="proof-7">Proof</h2>
+<p>We will show by induction of the structure of a term <span
+class="math inline"><em>t</em></span>.</p>
+<p>By Theorem 3.5.4 this the theorem is valid for B. We will focus on
+the extention.</p>
+<p>If the rule applied for the derivation <span
+class="math inline"><em>t</em> → <em>u</em></span> is <em>E-SUCC</em>
+then <span
+class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em><em>t</em><sub>1</sub></span>
+for a <span class="math inline"><em>t</em><sub>1</sub></span>. The only
+rule applicable on a <span
+class="math inline"><em>s</em><em>u</em><em>c</em><em>c</em></span> term
+is <em>E-SUCC</em>, so in this case the result follows.</p>
+<p>if the rule applied was <span
+class="math inline"><em>p</em><em>r</em><em>e</em><em>d</em><em>O</em></span>
+something similar follows. As with all other terms.</p>
 </body>
 </html>
