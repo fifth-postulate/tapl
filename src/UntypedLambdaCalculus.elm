@@ -1,4 +1,4 @@
-module UntypedLambdaCalculus exposing (Term(..), empty, isValue, parse, parser, step, toString)
+module UntypedLambdaCalculus exposing (Binding(..), Context, Term(..), default, empty, isValue, parse, parser, step, toString)
 
 import General exposing (Continue(..))
 import Parser exposing (Parser, atleast, character, characterClass, complete, many, word)
@@ -10,9 +10,9 @@ type Term
     | TmApp Term Term
 
 
-toString : Term -> String
-toString term =
-    format empty term
+toString : Context -> Term -> String
+toString context term =
+    format context term
 
 
 type alias Context =
@@ -26,6 +26,20 @@ type Binding
 empty : Context
 empty =
     []
+
+
+default : Context
+default =
+    [ ( "x", NameBind )
+    , ( "y", NameBind )
+    , ( "z", NameBind )
+    , ( "u", NameBind )
+    , ( "v", NameBind )
+    , ( "w", NameBind )
+    , ( "a", NameBind )
+    , ( "b", NameBind )
+    , ( "c", NameBind )
+    ]
 
 
 freshName : Context -> String -> ( Context, String )
@@ -51,18 +65,18 @@ length =
     List.length
 
 
-index2name : Context -> Int -> String
+index2name : Context -> Int -> Maybe String
 index2name context index =
     case context of
         ( h, _ ) :: ctx ->
             if index <= 0 then
-                h
+                Just h
 
             else
                 index2name ctx (index - 1)
 
         _ ->
-            "?"
+            Nothing
 
 
 format : Context -> Term -> String
@@ -73,19 +87,17 @@ format context term =
                 ( ctx, x_ ) =
                     freshName context x
             in
-            [ "(lambda ", x_, ", ", format ctx t, ")" ]
+            [ "(lambda ", x_, ". ", format ctx t, ")" ]
                 |> String.join ""
 
         TmApp t1 t2 ->
             [ "(", format context t1, " ", format context t2, ")" ]
                 |> String.join ""
 
-        TmVar x n ->
-            if length context == n then
-                index2name context x
-
-            else
-                "[bad index]"
+        TmVar x _ ->
+            x
+                |> index2name context
+                |> Maybe.withDefault "[bad index]"
 
 
 shift : Int -> Term -> Term
@@ -190,7 +202,10 @@ parse input =
 parser : Parser Term
 parser =
     Parser.ors abstractionParser
-        [ variableParser ]
+        [ variableParser
+        , applicationParser
+        , Parser.bracketed '(' ')' (Parser.lazy (\_ -> parser))
+        ]
 
 
 variableParser : Parser Term
@@ -225,3 +240,15 @@ dot =
     many space
         |> Parser.ignoreThen (character '.')
         |> Parser.keepThenIgnore (many space)
+
+
+applicationParser : Parser Term
+applicationParser =
+    let
+        eventuallyTerm =
+            Parser.lazy (\_ -> parser)
+    in
+    Parser.bracketed '(' ')' eventuallyTerm
+        |> Parser.keepThenIgnore (many space)
+        |> Parser.followedBy eventuallyTerm
+        |> Parser.map (\( l, r ) -> TmApp l r)

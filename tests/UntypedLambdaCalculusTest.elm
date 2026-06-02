@@ -3,7 +3,7 @@ module UntypedLambdaCalculusTest exposing (suite)
 import Expect exposing (Expectation)
 import General
 import Test exposing (..)
-import UntypedLambdaCalculus as Expression exposing (Term(..), empty, isValue, parse, step)
+import UntypedLambdaCalculus as Expression exposing (Binding(..), Context, Term(..), default, empty, isValue, parse)
 
 
 suite : Test
@@ -11,20 +11,30 @@ suite =
     describe "Untyped Lambda Calculus"
         [ describe "isValue"
             [ isValueTest { input = TmAbs "x" (TmVar 0 1) }
+            , isValueTest { input = TmAbs "y" (TmVar 0 1) }
             ]
         , describe "eval"
             [ evalTest { input = TmVar 0 1, expected = TmVar 0 1 }
             , evalTest { input = TmApp (TmAbs "x" (TmVar 0 1)) (TmAbs "y" (TmVar 0 1)), expected = TmAbs "y" (TmVar 0 1) }
             ]
         , describe "parse"
-            [ parseTest { input = "x", expected = TmVar 0 1 }
-            , parseTest { input = "y", expected = TmVar 0 1 }
-            , parseTest { input = "lambda x. x", expected = TmAbs "x" (TmVar 0 1) }
-            , parseTest { input = "lambda x . x", expected = TmAbs "x" (TmVar 0 1) }
-            , parseTest { input = "lambda y. y", expected = TmAbs "y" (TmVar 0 1) }
+            [ parseTest { input = "x", context = empty, expected = TmVar 0 1 }
+            , parseTest { input = "y", context = empty, expected = TmVar 0 1 }
+            , parseTest { input = "lambda x. x", context = empty, expected = TmAbs "x" (TmVar 0 1) }
+            , parseTest { input = "lambda x . x", context = empty, expected = TmAbs "x" (TmVar 0 1) }
+            , parseTest { input = "lambda y. y", context = empty, expected = TmAbs "y" (TmVar 0 1) }
+            , parseTest { input = "(lambda y. y)", context = empty, expected = TmAbs "y" (TmVar 0 1) }
+            , parseTest { input = "(lambda y. y) (lambda x. x)", context = empty, expected = TmApp (TmAbs "y" (TmVar 0 1)) (TmAbs "x" (TmVar 0 1)) }
+            , parseTest { input = "(lambda y. y) (lambda y. y)", context = empty, expected = TmApp (TmAbs "y" (TmVar 0 1)) (TmAbs "y" (TmVar 0 1)) }
+            , parseTest { input = "(lambda x. (x) y) (lambda y. y)", context = empty, expected = TmApp (TmAbs "x" (TmApp (TmVar 0 1) (TmVar 1 1))) (TmAbs "y" (TmVar 0 1)) }
             ]
         , describe "print"
-            [ printTest { input = TmVar 0 1, expected = "[bad index]" }
+            [ printTest { input = TmVar 0 1, context = default, expected = "x" }
+            , printTest { input = TmVar 0 1, context = [ ( "z", NameBind ) ], expected = "z" }
+            , printTest { input = TmAbs "x" (TmVar 0 1), context = default, expected = "(lambda x'. x')" }
+            , printTest { input = TmAbs "x" (TmVar 0 1), context = empty, expected = "(lambda x. x)" }
+            , printTest { input = TmAbs "x" (TmVar 1 1), context = [ ( "u", NameBind ) ], expected = "(lambda x. u)" }
+            , printTest { input = TmAbs "x" (TmVar 1 1), context = [ ( "v", NameBind ) ], expected = "(lambda x. v)" }
             ]
         ]
 
@@ -45,7 +55,7 @@ type alias ValueTestCase =
 
 isValueTest : ValueTestCase -> Test
 isValueTest testCase =
-    test (Expression.toString testCase.input) <|
+    test (Expression.toString default testCase.input) <|
         \_ ->
             toBeTrue (isValue empty testCase.input)
 
@@ -58,7 +68,7 @@ type alias EvalTestCase =
 
 evalTest : EvalTestCase -> Test
 evalTest testCase =
-    test (Expression.toString testCase.input) <|
+    test (Expression.toString default testCase.input) <|
         \_ ->
             let
                 actual =
@@ -70,6 +80,7 @@ evalTest testCase =
 
 type alias ParseTestCase =
     { input : String
+    , context : Context
     , expected : Term
     }
 
@@ -87,6 +98,7 @@ parseTest testCase =
 
 type alias PrintTestCase =
     { input : Term
+    , context : Context
     , expected : String
     }
 
@@ -97,6 +109,6 @@ printTest testCase =
         \_ ->
             let
                 actual =
-                    Expression.toString testCase.input
+                    Expression.toString testCase.context testCase.input
             in
             Expect.equal actual testCase.expected
