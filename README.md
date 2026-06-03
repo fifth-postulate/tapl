@@ -1,6 +1,8 @@
 # TAPL
 Exploring the book [Types and Programming Languages][tapl].
 
+There is an [accompanying website][website].
+
 ## Study Group
 As a joined effort to deepen our understanding and sharing knowledge,
 at work we started a study group. The intent is to gain hands-on
@@ -23,3 +25,4 @@ Although this project is hosted on [GitHub][github] it is versioned with
 [github]: https://github.com/
 [jj]: https://www.jj-vcs.dev/latest/
 [tapl]: https://www.cis.upenn.edu/~bcpierce/tapl/
+[website]: https://fifth-postulate.nl/tapl/
