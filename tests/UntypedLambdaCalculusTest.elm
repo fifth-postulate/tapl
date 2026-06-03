@@ -30,12 +30,12 @@ suite =
             , parseTest { input = "(lambda x. (x) y) (lambda y. y)", context = [ ( "y", NameBind ) ], expected = TmApp (TmAbs "x" (TmApp (TmVar 0 2) (TmVar 1 2))) (TmAbs "y" (TmVar 0 2)) }
             ]
         , describe "print"
-            [ printTest { input = TmVar 0 1, context = default, expected = "x" }
+            [ printTest { input = TmVar 0 1, context = [ ( "x", NameBind ) ], expected = "x" }
             , printTest { input = TmVar 0 1, context = [ ( "z", NameBind ) ], expected = "z" }
-            , printTest { input = TmAbs "x" (TmVar 0 1), context = default, expected = "(lambda x'. x')" }
+            , printTest { input = TmAbs "x" (TmVar 0 2), context = [ ( "x", NameBind ) ], expected = "(lambda x'. x')" }
             , printTest { input = TmAbs "x" (TmVar 0 1), context = empty, expected = "(lambda x. x)" }
-            , printTest { input = TmAbs "x" (TmVar 1 1), context = [ ( "u", NameBind ) ], expected = "(lambda x. u)" }
-            , printTest { input = TmAbs "x" (TmVar 1 1), context = [ ( "v", NameBind ) ], expected = "(lambda x. v)" }
+            , printTest { input = TmAbs "x" (TmVar 1 2), context = [ ( "u", NameBind ) ], expected = "(lambda x. u)" }
+            , printTest { input = TmAbs "x" (TmVar 1 2), context = [ ( "v", NameBind ) ], expected = "(lambda x. v)" }
             ]
         ]
 
