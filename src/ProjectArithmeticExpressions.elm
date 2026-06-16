@@ -1,8 +1,8 @@
 module ProjectArithmeticExpressions exposing (main)
 
-import ArithmeticExpressions as Expression
 import General
 import GenericPage
+import Language.ArithmeticExpressions as Expression
 
 
 main =

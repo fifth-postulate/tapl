@@ -1,4 +1,4 @@
-module ArithmeticExpressions exposing (Term(..), fromInt, isNumerical, isValue, parse, step, toString)
+module Language.ArithmeticExpressions exposing (Term(..), fromInt, isNumerical, isValue, parse, step, toString)
 
 import General exposing (Continue(..))
 import Parser exposing (Parser, atleast, bracketed, character, ignoreThen, keepThenIgnore, many, or)

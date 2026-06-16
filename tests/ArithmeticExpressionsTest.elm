@@ -1,8 +1,8 @@
 module ArithmeticExpressionsTest exposing (suite)
 
-import ArithmeticExpressions as Expression exposing (Term(..), isNumerical, isValue, parse)
 import Expect exposing (Expectation)
 import General
+import Language.ArithmeticExpressions as Expression exposing (Term(..), isNumerical, isValue, parse)
 import Test exposing (..)
 
 

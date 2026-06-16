@@ -2,7 +2,7 @@ module ProjectUntypedLambdaCalculus exposing (main)
 
 import General
 import GenericPage
-import UntypedLambdaCalculus as Expression exposing (default)
+import Language.UntypedLambdaCalculus as Expression exposing (default)
 
 
 main =

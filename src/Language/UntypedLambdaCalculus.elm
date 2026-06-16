@@ -1,4 +1,4 @@
-module UntypedLambdaCalculus exposing (Binding(..), Context, Term(..), default, empty, isValue, parse, parser, step, toString)
+module Language.UntypedLambdaCalculus exposing (Binding(..), Context, Term(..), default, empty, isValue, parse, parser, step, toString)
 
 import General exposing (Continue(..))
 import Parser exposing (Parser, atleast, character, characterClass, complete, many, word)

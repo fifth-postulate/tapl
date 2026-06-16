@@ -2,9 +2,8 @@ module UntypedLambdaCalculusTest exposing (suite)
 
 import Expect exposing (Expectation)
 import General
-import Parser
+import Language.UntypedLambdaCalculus as Expression exposing (Binding(..), Context, Term(..), default, empty, isValue, parse)
 import Test exposing (..)
-import UntypedLambdaCalculus as Expression exposing (Binding(..), Context, Term(..), default, empty, isValue, parse)
 
 
 suite : Test
