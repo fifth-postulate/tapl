@@ -741,5 +741,51 @@ is <em>E-SUCC</em>, so in this case the result follows.</p>
 <p>if the rule applied was <span
 class="math inline"><em>p</em><em>r</em><em>e</em><em>d</em><em>O</em></span>
 something similar follows. As with all other terms.</p>
+<h1 id="section-19">3.3.16</h1>
+<p>Let <span class="math inline"><em>L</em></span> be the language of
+untyped arithmetic expressions and <span
+class="math inline"><em>M</em></span> be <span
+class="math inline"><em>L</em></span> augmented with
+<code>wrong</code>.</p>
+<p><span class="math inline"><em>L</em></span> agrees with <span
+class="math inline"><em>M</em></span> in the following way:</p>
+<blockquote>
+<p>Whenever an expression <span class="math inline"><em>l</em></span> in
+<span class="math inline"><em>L</em></span> is in normal form, but is
+not a value, there is an derivation of <span
+class="math inline"><em>l</em>′</span> in <span
+class="math inline"><em>M</em></span> that directly leads to
+<code>wrong</code>.</p>
+</blockquote>
+<h2 id="proof-8">Proof</h2>
+<p>By definition of <span class="math inline"><em>M</em></span>.</p>
+<h1 id="section-20">3.5.17</h1>
+<blockquote>
+<p>Show that the small-step and big-step semantics for this language
+conincide, i.e. <span
+class="math inline"><em>t</em> →  * <em>v</em> ⇔ <em>t</em> ⇓ <em>v</em></span></p>
+</blockquote>
+<h2 id="proof-9">Proof</h2>
+<p>By induction on the length of derivations</p>
+<h1 id="section-21">3.5.18</h1>
+<blockquote>
+<p>Suppose we want to change the evaluation strategy of our language so
+that the <code>then</code> and <code>else</code> branches of an
+<code>if</code> expression are evaluated (in that order) <em>before</em>
+the guard is evaluated. Show how the evaluation rules need to change to
+achieve this effect.</p>
+</blockquote>
+<h2 id="answer-2">Answer</h2>
+<pre class="plain"><code>if true then v1 else v2 -&gt; v1</code></pre>
+<pre class="plain"><code>if false then v1 else v2 -&gt; v2</code></pre>
+<pre class="plain"><code>t2 -&gt; t2&#39;
+--------
+if t1 then t2 else t3 -&gt; if t1 then t2&#39; else t3</code></pre>
+<pre class="plain"><code>t3 -&gt; t3&#39;
+--------
+if t1 then v2 else t3 -&gt; if t1 then v2 else t3&#39;</code></pre>
+<pre class="plain"><code>t1 -&gt; t1&#39;
+--------
+if t1 then v2 else v2 -&gt; if t1&#39; then v2 else v3</code></pre>
 </body>
 </html>
