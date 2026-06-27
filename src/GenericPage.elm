@@ -46,7 +46,7 @@ init project _ =
 view : Model a -> Html (Msg a)
 view ((State m) as model) =
     Html.div []
-        [ Html.h1 [] [ Html.text m.project.title ]
+        [ Html.h1 [ Attribute.class "f1" ] [ Html.text m.project.title ]
         , viewInput model
         , viewTerm model
         , viewCache model
@@ -55,19 +55,25 @@ view ((State m) as model) =
 
 viewInput : Model a -> Html (Msg a)
 viewInput (State { input }) =
-    Html.textarea [ Attribute.cols 80, Attribute.rows 10, Event.onInput InputChanged ] [ Html.text input ]
+    Html.textarea [ Attribute.class "code", Attribute.cols 80, Attribute.rows 10, Event.onInput InputChanged ] [ Html.text input ]
 
 
 viewTerm : Model a -> Html (Msg a)
 viewTerm (State { project, input }) =
     case project.parse input of
         Just term ->
-            Html.div []
+            Html.div [ Attribute.class "measure" ]
                 [ Html.pre []
-                    [ Html.code [] [ Html.text (project.printer term) ]
+                    [ Html.code [ Attribute.class "code" ] [ Html.text (project.printer term) ]
                     ]
-                , Html.samp []
-                    [ Html.code [] [ Html.text (term |> project.evaluator |> project.printer) ] ]
+                , Html.samp
+                    [ Attribute.classList
+                        [ ( "bl", True )
+                        , ( "b--solid", True )
+                        , ( "bw1", True )
+                        ]
+                    ]
+                    [ Html.code [ Attribute.class "code" ] [ Html.text (term |> project.evaluator |> project.printer) ] ]
                 ]
 
         Nothing ->
@@ -82,11 +88,11 @@ viewCache ((State { project, cache }) as model) =
     in
     Html.div []
         [ viewAddToCache model
-        , Html.table []
+        , Html.table [ Attribute.class "measure-wide" ]
             [ Html.thead []
-                [ Html.tr []
-                    [ Html.th [] [ Html.text "Input" ]
-                    , Html.th [] [ Html.text "Term" ]
+                [ Html.tr [ Attribute.class "bb" ]
+                    [ Html.th [ Attribute.class "br" ] [ Html.text "Input" ]
+                    , Html.th [ Attribute.class "br" ] [ Html.text "Term" ]
                     , Html.th [] [ Html.text "Normal Form" ]
                     ]
                 ]
@@ -112,9 +118,9 @@ viewAddToCache (State { project, input }) =
 viewCacheLine : (a -> String) -> ( String, a, a ) -> Html (Msg a)
 viewCacheLine printer ( input, term, normal ) =
     Html.tr []
-        [ Html.td [] [ Html.text input ]
-        , Html.td [] [ Html.text (printer term) ]
-        , Html.td [] [ Html.text (printer normal) ]
+        [ Html.td [ Attribute.class "code", Attribute.class "br" ] [ Html.text input ]
+        , Html.td [ Attribute.class "code", Attribute.class "br" ] [ Html.text (printer term) ]
+        , Html.td [ Attribute.class "code" ] [ Html.text (printer normal) ]
         ]
 
 
