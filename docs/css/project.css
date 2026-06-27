@@ -1,0 +1,18 @@
+table {
+  width: 90%;
+  margin: 10px auto;
+  border-collapse: collapse;
+  border-top: 1px solid #999999;
+  border-bottom: 1px solid #999999;
+}
+
+th,
+td {
+  padding: 0.6em;
+  text-align: left;
+  vertical-align: top;
+}
+
+tbody tr:nth-child(odd) {
+  background-color: #eeeeee;
+}
