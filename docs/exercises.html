@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="" >
+
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Theory and Programming Languages Exercises</title>
+          <title>Theory and Programming Languages Exercises</title>
   <style>
     html {
       color: #1a1a1a;
@@ -163,629 +164,677 @@
     }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-</head>
+      </head>
+
 <body>
-<header id="title-block-header">
-<h1 class="title">Theory and Programming Languages Exercises</h1>
-</header>
-<h1 id="section">2.2.6</h1>
-<blockquote>
-<p>Suppose we are given a relation <span
-class="math inline"><em>R</em></span> on a set <span
-class="math inline"><em>S</em></span>. Define the relation <span
-class="math inline"><em>R</em>′</span> as follows:</p>
-</blockquote>
-<p><span
-class="math display"><em>R</em>′ = <em>R</em> ∪ {(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>}</span></p>
-<p>That is, <span class="math inline"><em>R</em>′</span> contains all
-the pairs in <span class="math inline"><em>R</em></span> plus all pairs
-of the form <span class="math inline">(<em>s</em>,<em>s</em>)</span>.
-Show that <span class="math inline"><em>R</em>′</span> is the reflexive
-closure of R.</p>
-<h2 id="proof">Proof</h2>
-<p>A relation <span class="math inline"><em>E</em></span> on <span
-class="math inline"><em>S</em></span> is reflexive when <span
-class="math inline">(<em>s</em>,<em>s</em>) ∈ <em>E</em></span> for all
-<span class="math inline"><em>s</em> ∈ <em>S</em></span>. In other
-words, <span class="math inline"><em>E</em></span> is reflexive if and
-only if</p>
-<p><span
-class="math display">{(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>} ⊂ <em>E</em></span></p>
-<p>By definition of <span class="math inline"><em>R</em>′</span> we have
-<span
-class="math inline">{(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>} ⊂ <em>R</em>′</span>
-so <span class="math inline"><em>R</em>′</span> is reflexive.</p>
-<p>If there is an other reflexive relation <span
-class="math inline"><em>B</em></span> such that <span
-class="math inline"><em>R</em> ⊂ <em>B</em></span> then also <span
-class="math inline"><em>R</em>′ ⊂ <em>B</em></span>. Since if <span
-class="math inline"><em>r</em> ∈ <em>R</em>′</span> then either <span
-class="math inline"><em>r</em> ∈ <em>R</em></span> or <span
-class="math inline"><em>r</em> = (<em>s</em>,<em>s</em>)</span> for an
-<span class="math inline"><em>s</em> ∈ <em>S</em></span>. If <span
-class="math inline"><em>r</em> ∈ <em>R</em></span> then also <span
-class="math inline"><em>r</em> ∈ <em>B</em></span> since <span
-class="math inline"><em>R</em> ⊂ <em>B</em></span>. If <span
-class="math inline"><em>r</em> = (<em>s</em>, <em>s</em></span>) for an
-<span class="math inline"><em>s</em> ∈ <em>S</em></span> then also <span
-class="math inline"><em>r</em> ∈ <em>B</em></span> since <span
-class="math inline"><em>B</em></span> is reflexive. Either way <span
-class="math inline"><em>r</em> ∈ <em>B</em></span> hence <span
-class="math display"><em>R</em>′ ⊂ <em>B</em></span></p>
-<p>So <span class="math inline"><em>R</em>′</span> is the reflexive
-clojure of <span class="math inline"><em>R</em></span>.</p>
-<h1 id="section-1">2.2.7</h1>
-<blockquote>
-<p>Here is a more constructive definition of the transitive closure of a
-relation <span class="math inline"><em>R</em></span>. First we define
-the following sequence of sets of pairs:</p>
-<p><span
-class="math display"><em>R</em><sub>0</sub> = <em>R</em></span></p>
-<p>and</p>
-<p><span
-class="math display"><em>R</em><sub><em>i</em> + 1</sub> = <em>R</em><sub><em>i</em></sub> ∪ {(<em>s</em>,<em>u</em>)|<em>t</em> ∈ <em>S</em>; (<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub>, (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>i</em></sub>}</span></p>
-<p>That is, we construct each <span
-class="math inline"><em>R</em><sub><em>i</em> + 1</sub></span> by adding
-to <span class="math inline"><em>R</em><sub><em>i</em></sub></span> all
-the pairs that can be obtained by “one step transitivity” from pairs
-already in <span
-class="math inline"><em>R</em><sub><em>i</em></sub></span>. Finally,
-define the relation <span
-class="math inline"><em>R</em><sup>+</sup></span> as the union of all
-the <span
-class="math inline"><em>R</em><sub><em>i</em></sub></span>:</p>
-<p><span
-class="math display"><em>R</em><sup>+</sup> = ⋃<sub><em>i</em></sub><em>R</em><sub><em>i</em></sub></span></p>
-<p>Show that <span class="math inline"><em>R</em><sup>+</sup></span>
-really is the transitive closure of <span
-class="math inline"><em>R</em></span>.</p>
-</blockquote>
-<h2 id="lemma">Lemma</h2>
-<p>We first show a little lemma</p>
-<blockquote>
-<p>If for a certain <span
-class="math inline"><em>i</em> ∈ <em>N</em></span> we have <span
-class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
-then for all <span class="math inline"><em>j</em> ≥ <em>i</em></span> we
-have <span
-class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>j</em></sub></span>.</p>
-</blockquote>
-<h3 id="proof-1">Proof</h3>
-<p>We call a number <span class="math inline"><em>n</em></span> cute if
-<span
-class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>n</em></sub></span>.
-Since <span
-class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
-zero is cute.</p>
-<p>Assume <span class="math inline"><em>k</em></span> to be cute, we
-will show that <span class="math inline"><em>k</em> + 1</span> is cute
-as well. Since <span class="math inline"><em>k</em></span> is cute we
-have that <span
-class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>k</em></sub></span>.
-Notice that</p>
-<p><span
-class="math display"><em>R</em><sub><em>i</em> + 1</sub> = <em>R</em><sub><em>i</em></sub> ∪ {(<em>s</em>,<em>u</em>)|<em>t</em> ∈ <em>S</em>; (<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub>, (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>i</em></sub>}</span></p>
-<p>means that <span
-class="math inline"><em>R</em><em>i</em> + <em>k</em> ⊂ <em>R</em><sub><em>i</em> + <em>k</em> + 1</sub></span>
-hence <span
-class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>k</em> + 1</sub></span>
-so <span class="math inline"><em>k</em> + 1</span> is cute.</p>
-<p>By the principle of mathematical induction all natural numbers are
-cute. I.e. <span
-class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>j</em></sub></span>
-for all <span class="math inline"><em>j</em> ≥ <em>i</em></span>.</p>
-<h2 id="proof-2">Proof</h2>
-<p>A relation <span class="math inline"><em>E</em></span> is transitive
-if for pairs <span
-class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>E</em></span>
-we have <span
-class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>E</em></span>.</p>
-<p>Let <span
-class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>R</em><sup>+</sup></span>.
-Then there are <span
-class="math inline"><em>i</em>, <em>j</em> ∈ <em>N</em></span> such that
-<span
-class="math inline">(<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
-and <span
-class="math inline">(<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>j</em></sub></span>.
-Let <span class="math inline"><em>k</em></span> be the maximum of <span
-class="math inline"><em>i</em></span> and <span
-class="math inline"><em>j</em></span>. Then, by the preceding lemma, we
-have <span
-class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.</p>
-<p>By the definition of <span
-class="math inline"><em>R</em><sub><em>k</em> + 1</sub></span> we have
-<span
-class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em> + 1</sub></span>
-so <span
-class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sup>+</sup></span>.
-Hence <span class="math inline"><em>R</em><sup>+</sup></span> is a
-transitive relation.</p>
-<p>To show that <span class="math inline"><em>R</em><sup>+</sup></span>
-is the smallest transitive relation containing <span
-class="math inline"><em>R</em></span>, i.e. the <em>transitive
-closure</em> of <span class="math inline"><em>R</em></span>, let <span
-class="math inline"><em>B</em></span> be a transitive relation
-containing <span class="math inline"><em>R</em></span>. We will show
-that <span
-class="math inline"><em>R</em><sup>+</sup> ⊂ <em>B</em></span>.</p>
-<p>To that end we will show that <span
-class="math inline"><em>R</em><sub><em>i</em></sub> ⊂ <em>B</em></span>
-for each <span class="math inline"><em>i</em> ∈ <em>N</em></span>. Call
-a number k splendid if <span
-class="math inline"><em>R</em><sub><em>k</em></sub> ⊂ <em>B</em></span>.
-By definition <span
-class="math inline"><em>R</em><sub>0</sub> = <em>R</em> ⊂ <em>B</em></span>
-so zero is spendid.</p>
-<p>If <span class="math inline"><em>k</em></span> is splendid we will
-show that <span class="math inline"><em>k</em> + 1</span> is splendid as
-well. Assume <span class="math inline"><em>k</em></span> is splendid,
-i.e. <span
-class="math inline"><em>R</em><sub><em>k</em></sub> ⊂ <em>B</em></span>.
-Then for <span
-class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em> + 1</sub> \ <em>R</em><sub><em>k</em></sub></span>
-there is a <span class="math inline"><em>t</em> ∈ <em>S</em></span> such
-that <span
-class="math inline">(<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>k</em></sub> ⊂ <em>B</em></span>
-and <span
-class="math inline">(<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub> ⊂ <em>B</em></span>.
-Since <span class="math inline"><em>B</em></span> is transitive we also
-<span class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>B</em></span>.
-Hence <span
-class="math inline"><em>R</em><sub><em>k</em> + 1</sub> ⊂ <em>B</em></span>.</p>
-<p>By the principle of mathematical induction all numbers are
-splendid.</p>
-<h1 id="section-2">2.2.8</h1>
-<p>Suppose <span class="math inline"><em>R</em></span> is a binary
-relation on a set <span class="math inline"><em>S</em></span> and <span
-class="math inline"><em>P</em></span> is a predicate on <span
-class="math inline"><em>S</em></span> that is preserved by <span
-class="math inline"><em>R</em></span>. Show that <span
-class="math inline"><em>P</em></span> is also preserved by <span
-class="math inline"><em>R</em>*</span>.</p>
-<h2 id="proof-3">Proof</h2>
-<p>A predicate <span class="math inline"><em>T</em></span> is preserved
-by relation <span class="math inline"><em>R</em></span> if whenever
-<span class="math inline">(<em>s</em>,<em>s</em>′) ∈ <em>R</em></span>
-and <span class="math inline"><em>T</em>(<em>s</em>)</span> we also have
-<span class="math inline"><em>T</em>(<em>s</em>′)</span>.</p>
-<p><span class="math inline"><em>R</em><sup>*</sup></span> is the
-<em>reflexive and transitive closure</em> of <span
-class="math inline"><em>R</em></span>, i.e. the smallest reflexive and
-transitive relation that contains <span
-class="math inline"><em>R</em></span>. By exercise 2.2.7 we know that
-there is a sequence of relations <span
-class="math inline"><em>R</em><sub><em>i</em></sub></span> for <span
-class="math inline"><em>i</em> ∈ <em>N</em></span> such that</p>
-<p><span
-class="math display"><em>R</em><sub>0</sub> = <em>R</em><sup>+</sup></span></p>
-<p>and</p>
-<p><span
-class="math display"><em>R</em><sub><em>i</em> + 1</sub> = <em>R</em><sub><em>i</em></sub> ∪ {(<em>s</em>,<em>u</em>)|<em>t</em> ∈ <em>S</em>; (<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub>, (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>i</em></sub>}</span></p>
-<p>with <span
-class="math inline"><em>R</em><sup>*</sup> = ⋃<sub><em>i</em></sub><em>R</em><sub><em>i</em></sub></span>.</p>
-<p>Call a number <span
-class="math inline"><em>k</em> ∈ <em>N</em></span> gratefull if <span
-class="math inline"><em>R</em><sub><em>k</em></sub></span> preserves
-<span class="math inline"><em>P</em></span>. By exercise 2.2.6 <span
-class="math inline"><em>R</em><sub>0</sub> = <em>R</em><sup>+</sup> = <em>R</em> ∪ {(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>}</span>.
-So for <span
-class="math inline">(<em>s</em>,<em>s</em>′) ∈ <em>R</em><sub>0</sub></span>
-we have <span class="math inline"><em>s</em> = <em>s</em>′</span> or
-<span class="math inline">(<em>s</em>,<em>s</em>′) ∈ <em>R</em></span>.
-Either way, whenever <span
-class="math inline"><em>P</em>(<em>s</em>)</span> also $P(s’) because if
-<span class="math inline"><em>s</em> = <em>s</em>′</span> then <span
-class="math inline"><em>P</em>(<em>s</em>) = <em>P</em>(<em>s</em>′)</span>,
-otherwise <span class="math inline"><em>P</em>(<em>s</em>′)</span>
-because <span class="math inline"><em>R</em></span> preserves <span
-class="math inline"><em>P</em></span>.</p>
-<p>Assume <span class="math inline"><em>k</em></span> is gratefull, we
-will show that <span class="math inline"><em>k</em> + 1</span> is
-gratefull as well. Without loss of generality let <span
-class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em> + 1</sub> \ <em>R</em><sub><em>k</em></sub></span>
-and <span class="math inline"><em>P</em>(<em>s</em>)</span>. Then there
-exist <span class="math inline"><em>t</em> ∈ <em>S</em></span> such that
-<span
-class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.
-Since <span class="math inline"><em>k</em></span> is assumed to be
-gratefull, <span
-class="math inline"><em>R</em><sub><em>k</em></sub></span> preserves
-<span class="math inline"><em>P</em></span> so from <span
-class="math inline"><em>P</em>(<em>s</em>)</span> also <span
-class="math inline"><em>P</em>(<em>t</em>)</span> since <span
-class="math inline">(<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.
-And since <span class="math inline"><em>P</em>(<em>t</em>)</span> also
-<span class="math inline"><em>P</em>(<em>u</em>)</span> since <span
-class="math inline">(<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.
-Hence <span class="math inline"><em>k</em> + 1</span> is gratefull.</p>
-<p>By the principle of mathematical induction every natural number is
-gratefull. I.e. <span class="math inline"><em>R</em><sup>*</sup></span>
-preserve <span class="math inline"><em>P</em></span>.</p>
-<h1 id="section-3">3.2.4</h1>
-<blockquote>
-<p>How many elements does <span
-class="math inline"><em>S</em><sub>3</sub></span> have?</p>
-</blockquote>
-<h2 id="proof-4">Proof</h2>
-<p>The sequence of set <span
-class="math inline"><em>S</em><sub><em>i</em></sub></span> for <span
-class="math inline"><em>i</em> ∈ <em>N</em></span> is defined as</p>
-<p><span class="math display"><em>S</em><sub>0</sub> = ⌀</span></p>
-<p>and</p>
-<p><span
-class="math display"><em>S</em><sub><em>i</em> + 1</sub> = {<em>t</em><em>r</em><em>u</em><em>e</em>, <em>f</em><em>a</em><em>l</em><em>s</em><em>e</em>, <em>O</em>} ∪ {<em>s</em><em>u</em><em>c</em><em>c</em><em>t</em>, <em>p</em><em>r</em><em>e</em><em>d</em><em>t</em>, <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em><em>t</em>|<em>t</em>∈<em>S</em><sub><em>i</em></sub>}∪{<em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub>|<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub> ∈ <em>S</em><sub><em>i</em></sub>}</span></p>
-<p>Let <span
-class="math inline"><em>T</em><sub><em>i</em></sub> = #<em>S</em><sub><em>i</em></sub></span>.
-Then <span class="math inline"><em>T</em><sub>0</sub> = 0</span> and</p>
-<p><span
-class="math display"><em>T</em><sub><em>i</em> + 1</sub> = 3 + 3 ⋅ <em>T</em><sub><em>i</em></sub> + <em>T</em><sub><em>i</em></sub><sup>3</sup></span></p>
-<p>The sequence starts with <span
-class="math inline">0, 3, 39, 59439, …</span>.</p>
-<p>So there are 59439 elements in <span
-class="math inline"><em>S</em><sub>3</sub></span>.</p>
-<h1 id="section-4">3.2.5</h1>
-<blockquote>
-<p>Show that the sets <span
-class="math inline"><em>S</em><sub><em>i</em></sub></span> are
-<em>cumulative</em>; that is, that for each <span
-class="math inline"><em>i</em></span> we have <span
-class="math inline"><em>S</em><sub><em>i</em></sub> ⊂ <em>S</em><sub><em>i</em> + 1</sub></span>.</p>
-</blockquote>
-<h2 id="proof-5">Proof</h2>
-<p>Call <span class="math inline"><em>k</em></span> frivolous if <span
-class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>.
-We will show that all numbers are frivolous.</p>
-<p>Since <span class="math inline"><em>S</em><sub>0</sub> = ⌀</span> and
-<span class="math inline">⌀ ⊂ <em>A</em></span> for any set <span
-class="math inline"><em>A</em></span>, in particular <span
-class="math inline"><em>S</em><sub>1</sub></span>, we see that 0 is
-frivolous.</p>
-<p>Assume that <span class="math inline"><em>k</em></span> is frivolous.
-We will show that <span class="math inline"><em>k</em> + 1</span> is
-frivolous as well. Let <span
-class="math inline"><em>s</em> ∈ <em>S</em><sub><em>k</em> + 1</sub></span>.
-There are three cases to consider</p>
-<ul>
-<li><span
-class="math inline"><em>s</em> ∈ {<em>t</em><em>r</em><em>u</em><em>e</em>, <em>f</em><em>a</em><em>l</em><em>s</em><em>e</em>, 0}</span>.
-By definition $sS_{k+2}.</li>
-<li>$s{succ t, pred t, iszero t |tS_{k}}. Since <span
-class="math inline"><em>k</em></span> is frivolous, i.e <span
-class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>,
-we see that</li>
-</ul>
-<p><span
-class="math display">{<em>s</em><em>u</em><em>c</em><em>c</em><em>t</em>, <em>p</em><em>r</em><em>e</em><em>d</em><em>t</em>, <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em><em>t</em>|<em>t</em>∈<em>S</em><sub><em>k</em></sub>}⊂{<em>s</em><em>u</em><em>c</em><em>c</em><em>t</em>,<em>p</em><em>r</em><em>e</em><em>d</em><em>t</em>,<em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em><em>t</em>|<em>t</em> ∈ <em>S</em><sub><em>k</em> + 1</sub>} ⊂ <em>S</em><sub><em>k</em> + 2</sub></span></p>
-<ul>
-<li>$s{if t_{1} then t_{2} else t_{3}|t_{1},t_{2},t_{3}S_{k}}. Since
-<span class="math inline"><em>k</em></span> is frivolous, i.e. <span
-class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>,
-we see that</li>
-</ul>
-<p><span
-class="math display">{<em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub>|<em>t</em><sub>1</sub>,<em>t</em><sub>2</sub>,<em>t</em><sub>3</sub>∈<em>S</em><sub><em>k</em></sub>}⊂{<em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub>|<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub> ∈ <em>S</em><sub><em>k</em> + 1</sub>} ⊂ <em>S</em><sub><em>k</em> + 2</sub></span></p>
-<p>In all cases <span
-class="math inline"><em>s</em> ∈ <em>S</em><sub><em>k</em> + 2</sub></span>,
-hence <span class="math inline"><em>k</em> + 1</span> is frivolous.</p>
-<p>By the principle of mathematical induction all numbers are
-frivolous.</p>
-<h1 id="principle-of-induction-on-terms">3.3.4 Principle of Induction on
-Terms</h1>
-<blockquote>
-<p>Suppose <span class="math inline"><em>P</em></span> is a predicate on
-terms</p>
-<h3 id="induction-on-depth">Induction on Depth</h3>
-<p>If for each term <span class="math inline"><em>s</em></span>, given
-<span class="math inline"><em>P</em>(<em>r</em>)</span> for all <span
-class="math inline"><em>r</em></span> such that <span
-class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>r</em>) &lt; <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>s</em>)</span>
-we can show <span class="math inline"><em>P</em>(<em>s</em>)</span>,
-then <span class="math inline"><em>P</em>(<em>s</em>)</span> holds for
-all <span class="math inline"><em>s</em></span>.</p>
-<h3 id="induction-on-size">Induction on Size</h3>
-<p>If for each term <span class="math inline"><em>s</em></span>, given
-<span class="math inline"><em>P</em>(<em>r</em>)</span> for all <span
-class="math inline"><em>r</em></span> such that <span
-class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>r</em>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>s</em>)</span>
-we can show <span class="math inline"><em>P</em>(<em>s</em>)</span>,
-then <span class="math inline"><em>P</em>(<em>s</em>)</span> holds for
-all <span class="math inline"><em>s</em></span>.</p>
-<h3 id="structural-induction">Structural Induction</h3>
-<p>If for each term <span class="math inline"><em>s</em></span>, given
-<span class="math inline"><em>P</em>(<em>r</em>)</span> for all
-immediate subterms <span class="math inline"><em>r</em></span> of <span
-class="math inline"><em>s</em></span>, we can show <span
-class="math inline"><em>P</em>(<em>s</em>)</span>, then <span
-class="math inline"><em>P</em>(<em>s</em>)</span> holds for all <span
-class="math inline"><em>s</em></span>.</p>
-</blockquote>
-<h2 id="proof-6">Proof</h2>
-<h3 id="induction-on-depth-1">Induction on Depth</h3>
-<p>We call <span
-class="math inline"><em>n</em> ∈ <em>N</em> \ {0}</span> <em>deep</em>
-if and only if for all terms <span class="math inline"><em>s</em></span>
-of <span
-class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>s</em>) ≤ <em>n</em></span>
-holds that <span class="math inline"><em>P</em>(<em>s</em>)</span>. We
-will show that all numbers are deep.</p>
-<p>Notice that <span class="math inline">1</span> is deep. A term of
-<span class="math inline"><em>t</em></span> with <span
-class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>) = 1</span>
-is a constant and there are no terms with a smaller depth, so are
-assumption holds vacuously and <span
-class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
-<p>Assume <span class="math inline"><em>k</em></span> is deep. We will
-show that <span class="math inline"><em>k</em> + 1</span> is deep. Let
-<span class="math inline"><em>t</em></span> be a term of depth <span
-class="math inline"><em>k</em> + 1</span>. There are two cases</p>
-<ul>
-<li><p><span
-class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em>(<em>t</em>′)</span>
-or <span
-class="math inline"><em>t</em> = <em>p</em><em>r</em><em>e</em><em>d</em>(<em>t</em>′)</span>
-or <span
-class="math inline"><em>t</em> = <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em>(<em>t</em>′)</span>
-for a term <span class="math inline"><em>t</em>′</span>. Notice that in
-all cases <span
-class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>′) &lt; <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>′) + 1 = <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>)</span>.
-<span class="math inline"><em>k</em></span> is deep so <span
-class="math inline"><em>P</em>(<em>t</em>′)</span> holds. With our
-assumption we deduce that <span
-class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p></li>
-<li><p><span
-class="math inline"><em>t</em> = <em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub></span>
-for terms <span class="math inline"><em>t</em><sub>1</sub></span>, <span
-class="math inline"><em>t</em><sub>2</sub></span> and <span
-class="math inline"><em>t</em><sub>3</sub></span>. Notice that for each
-<span class="math inline"><em>i</em> ∈ {1, 2, 3}</span> we have</p></li>
-</ul>
-<p><span
-class="math display"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em><sub><em>i</em></sub>) ≤ <em>m</em><em>a</em><em>x</em>{<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub>} &lt; <em>m</em><em>a</em><em>x</em>{<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub>} + 1 = <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>)</span></p>
-<p><span class="math inline"><em>k</em></span> is deep so <span
-class="math inline"><em>P</em>(<em>t</em><sub>1</sub>)</span>, <span
-class="math inline"><em>P</em>(<em>t</em><sub>2</sub>)</span> and
-$P(t_{3}) hold. With our assumption we deduce that <span
-class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
-<p>In either of the two cases to consider we have shown that <span
-class="math inline"><em>P</em>(<em>t</em>)</span> holds, hence <span
-class="math inline"><em>k</em> + 1</span> is deep.</p>
-<p>With the principle of mathematical induction all natural numbers
-besides 0 are deep.</p>
-<h3 id="induction-on-size-1">Induction on Size</h3>
-<p>We call <span
-class="math inline"><em>n</em> ∈ <em>N</em> \ {0}</span> <em>tall</em>
-if and only if for all terms <span class="math inline"><em>s</em></span>
-of <span
-class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>s</em>) ≤ <em>n</em></span>
-holds that <span class="math inline"><em>P</em>(<em>s</em>)</span>. We
-will show that all numbers are tall.</p>
-<p>Notice that <span class="math inline">1</span> is tall. A term of
-<span class="math inline"><em>t</em></span> with <span
-class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>) = 1</span>
-is a constant and there are no terms with a smaller size, so are
-assumption holds vacuously and <span
-class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
-<p>Assume <span class="math inline"><em>k</em></span> is tall. We will
-show that <span class="math inline"><em>k</em> + 1</span> is tall. Let
-<span class="math inline"><em>t</em></span> be a term of size <span
-class="math inline"><em>k</em> + 1</span>. There are two cases</p>
-<ul>
-<li><p><span
-class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em>(<em>t</em>′)</span>
-or <span
-class="math inline"><em>t</em> = <em>p</em><em>r</em><em>e</em><em>d</em>(<em>t</em>′)</span>
-or <span
-class="math inline"><em>t</em> = <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em>(<em>t</em>′)</span>
-for a term <span class="math inline"><em>t</em>′</span>. Notice that in
-all cases <span
-class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>′) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>′) + 1 = <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span>.
-<span class="math inline"><em>k</em></span> is large so <span
-class="math inline"><em>P</em>(<em>t</em>′)</span> holds. With our
-assumption we deduce that <span
-class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p></li>
-<li><p><span
-class="math inline"><em>t</em> = <em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub></span>
-for terms <span class="math inline"><em>t</em><sub>1</sub></span>, <span
-class="math inline"><em>t</em><sub>2</sub></span> and <span
-class="math inline"><em>t</em><sub>3</sub></span>. Notice that for each
-<span class="math inline"><em>i</em> ∈ {1, 2, 3}</span> we have</p></li>
-</ul>
-<p><span
-class="math display"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub><em>i</em></sub>) ≤ <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>1</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>2</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>3</sub>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>1</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>2</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>3</sub>) + 1 = <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span></p>
-<p><span class="math inline"><em>k</em></span> is deep so <span
-class="math inline"><em>P</em>(<em>t</em><sub>1</sub>)</span>, <span
-class="math inline"><em>P</em>(<em>t</em><sub>2</sub>)</span> and
-$P(t_{3}) hold. With our assumption we deduce that <span
-class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
-<p>In either of the two cases to consider we have shown that <span
-class="math inline"><em>P</em>(<em>t</em>)</span> holds, hence <span
-class="math inline"><em>k</em> + 1</span> is tall.</p>
-<p>With the principle of mathematical induction all natural numbers
-besides 0 are tall.</p>
-<h3 id="structural-induction-1">Structural Induction</h3>
-<p>Notice that for all terms <span class="math inline"><em>t</em></span>
-we have for all of <span class="math inline"><em>t</em></span>s
-immediate subterms <span class="math inline"><em>r</em></span> <span
-class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>r</em>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span>.
-The result then follows by induction on size.</p>
-<h1 id="section-5">3.5.5</h1>
-<blockquote>
-<p>Spell out the induction principle used in the preceding proof, in the
-style of 3.3.4.</p>
-</blockquote>
-<h2 id="answer">Answer</h2>
-<p>The used principle of induction is <em>structural induction</em>.</p>
-<blockquote>
-<p>If for each term <span class="math inline"><em>s</em></span>, given
-<span class="math inline"><em>P</em>(<em>r</em>)</span> for all
-immediate subterms <span class="math inline"><em>r</em></span> of <span
-class="math inline"><em>s</em></span>, we can show <span
-class="math inline"><em>P</em>(<em>s</em>)</span>, then <span
-class="math inline"><em>P</em>(<em>s</em>)</span> holds for all <span
-class="math inline"><em>s</em></span>.</p>
-</blockquote>
-<h1 id="section-6">3.5.10</h1>
-<blockquote>
-<p>Rephrase definition 3.5.9 as a set of inference rules.</p>
-</blockquote>
-<h2 id="answer-1">Answer</h2>
-<h3 id="closure">Closure</h3>
-<pre><code>t --&gt; t&#39;
+      <header id="title-block-header">
+    <a href="index.html">↩ TAPL</a><br>
+    <h1 class="title">Theory and Programming Languages Exercises</h1>
+                  </header>
+      <h1 id="section">2.2.6</h1>
+      <blockquote>
+      <p>Suppose we are given a relation <span
+      class="math inline"><em>R</em></span> on a set <span
+      class="math inline"><em>S</em></span>. Define the relation <span
+      class="math inline"><em>R</em>′</span> as follows:</p>
+      </blockquote>
+      <p><span
+      class="math display"><em>R</em>′ = <em>R</em> ∪ {(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>}</span></p>
+      <p>That is, <span class="math inline"><em>R</em>′</span> contains
+      all the pairs in <span class="math inline"><em>R</em></span> plus
+      all pairs of the form <span
+      class="math inline">(<em>s</em>,<em>s</em>)</span>. Show that
+      <span class="math inline"><em>R</em>′</span> is the reflexive
+      closure of R.</p>
+      <h2 id="proof">Proof</h2>
+      <p>A relation <span class="math inline"><em>E</em></span> on <span
+      class="math inline"><em>S</em></span> is reflexive when <span
+      class="math inline">(<em>s</em>,<em>s</em>) ∈ <em>E</em></span>
+      for all <span class="math inline"><em>s</em> ∈ <em>S</em></span>.
+      In other words, <span class="math inline"><em>E</em></span> is
+      reflexive if and only if</p>
+      <p><span
+      class="math display">{(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>} ⊂ <em>E</em></span></p>
+      <p>By definition of <span class="math inline"><em>R</em>′</span>
+      we have <span
+      class="math inline">{(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>} ⊂ <em>R</em>′</span>
+      so <span class="math inline"><em>R</em>′</span> is reflexive.</p>
+      <p>If there is an other reflexive relation <span
+      class="math inline"><em>B</em></span> such that <span
+      class="math inline"><em>R</em> ⊂ <em>B</em></span> then also <span
+      class="math inline"><em>R</em>′ ⊂ <em>B</em></span>. Since if
+      <span class="math inline"><em>r</em> ∈ <em>R</em>′</span> then
+      either <span class="math inline"><em>r</em> ∈ <em>R</em></span> or
+      <span
+      class="math inline"><em>r</em> = (<em>s</em>,<em>s</em>)</span>
+      for an <span class="math inline"><em>s</em> ∈ <em>S</em></span>.
+      If <span class="math inline"><em>r</em> ∈ <em>R</em></span> then
+      also <span class="math inline"><em>r</em> ∈ <em>B</em></span>
+      since <span class="math inline"><em>R</em> ⊂ <em>B</em></span>. If
+      <span
+      class="math inline"><em>r</em> = (<em>s</em>, <em>s</em></span>)
+      for an <span class="math inline"><em>s</em> ∈ <em>S</em></span>
+      then also <span class="math inline"><em>r</em> ∈ <em>B</em></span>
+      since <span class="math inline"><em>B</em></span> is reflexive.
+      Either way <span
+      class="math inline"><em>r</em> ∈ <em>B</em></span> hence <span
+      class="math display"><em>R</em>′ ⊂ <em>B</em></span></p>
+      <p>So <span class="math inline"><em>R</em>′</span> is the
+      reflexive clojure of <span
+      class="math inline"><em>R</em></span>.</p>
+      <h1 id="section-1">2.2.7</h1>
+      <blockquote>
+      <p>Here is a more constructive definition of the transitive
+      closure of a relation <span class="math inline"><em>R</em></span>.
+      First we define the following sequence of sets of pairs:</p>
+      <p><span
+      class="math display"><em>R</em><sub>0</sub> = <em>R</em></span></p>
+      <p>and</p>
+      <p><span
+      class="math display"><em>R</em><sub><em>i</em> + 1</sub> = <em>R</em><sub><em>i</em></sub> ∪ {(<em>s</em>,<em>u</em>)|<em>t</em> ∈ <em>S</em>; (<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub>, (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>i</em></sub>}</span></p>
+      <p>That is, we construct each <span
+      class="math inline"><em>R</em><sub><em>i</em> + 1</sub></span> by
+      adding to <span
+      class="math inline"><em>R</em><sub><em>i</em></sub></span> all the
+      pairs that can be obtained by “one step transitivity” from pairs
+      already in <span
+      class="math inline"><em>R</em><sub><em>i</em></sub></span>.
+      Finally, define the relation <span
+      class="math inline"><em>R</em><sup>+</sup></span> as the union of
+      all the <span
+      class="math inline"><em>R</em><sub><em>i</em></sub></span>:</p>
+      <p><span
+      class="math display"><em>R</em><sup>+</sup> = ⋃<sub><em>i</em></sub><em>R</em><sub><em>i</em></sub></span></p>
+      <p>Show that <span
+      class="math inline"><em>R</em><sup>+</sup></span> really is the
+      transitive closure of <span
+      class="math inline"><em>R</em></span>.</p>
+      </blockquote>
+      <h2 id="lemma">Lemma</h2>
+      <p>We first show a little lemma</p>
+      <blockquote>
+      <p>If for a certain <span
+      class="math inline"><em>i</em> ∈ <em>N</em></span> we have <span
+      class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
+      then for all <span
+      class="math inline"><em>j</em> ≥ <em>i</em></span> we have <span
+      class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>j</em></sub></span>.</p>
+      </blockquote>
+      <h3 id="proof-1">Proof</h3>
+      <p>We call a number <span class="math inline"><em>n</em></span>
+      cute if <span
+      class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>n</em></sub></span>.
+      Since <span
+      class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
+      zero is cute.</p>
+      <p>Assume <span class="math inline"><em>k</em></span> to be cute,
+      we will show that <span class="math inline"><em>k</em> + 1</span>
+      is cute as well. Since <span class="math inline"><em>k</em></span>
+      is cute we have that <span
+      class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>k</em></sub></span>.
+      Notice that</p>
+      <p><span
+      class="math display"><em>R</em><sub><em>i</em> + 1</sub> = <em>R</em><sub><em>i</em></sub> ∪ {(<em>s</em>,<em>u</em>)|<em>t</em> ∈ <em>S</em>; (<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub>, (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>i</em></sub>}</span></p>
+      <p>means that <span
+      class="math inline"><em>R</em><em>i</em> + <em>k</em> ⊂ <em>R</em><sub><em>i</em> + <em>k</em> + 1</sub></span>
+      hence <span
+      class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>i</em> + <em>k</em> + 1</sub></span>
+      so <span class="math inline"><em>k</em> + 1</span> is cute.</p>
+      <p>By the principle of mathematical induction all natural numbers
+      are cute. I.e. <span
+      class="math inline">(<em>a</em>,<em>b</em>) ∈ <em>R</em><sub><em>j</em></sub></span>
+      for all <span
+      class="math inline"><em>j</em> ≥ <em>i</em></span>.</p>
+      <h2 id="proof-2">Proof</h2>
+      <p>A relation <span class="math inline"><em>E</em></span> is
+      transitive if for pairs <span
+      class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>E</em></span>
+      we have <span
+      class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>E</em></span>.</p>
+      <p>Let <span
+      class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>R</em><sup>+</sup></span>.
+      Then there are <span
+      class="math inline"><em>i</em>, <em>j</em> ∈ <em>N</em></span>
+      such that <span
+      class="math inline">(<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub></span>
+      and <span
+      class="math inline">(<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>j</em></sub></span>.
+      Let <span class="math inline"><em>k</em></span> be the maximum of
+      <span class="math inline"><em>i</em></span> and <span
+      class="math inline"><em>j</em></span>. Then, by the preceding
+      lemma, we have <span
+      class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.</p>
+      <p>By the definition of <span
+      class="math inline"><em>R</em><sub><em>k</em> + 1</sub></span> we
+      have <span
+      class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em> + 1</sub></span>
+      so <span
+      class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sup>+</sup></span>.
+      Hence <span class="math inline"><em>R</em><sup>+</sup></span> is a
+      transitive relation.</p>
+      <p>To show that <span
+      class="math inline"><em>R</em><sup>+</sup></span> is the smallest
+      transitive relation containing <span
+      class="math inline"><em>R</em></span>, i.e. the <em>transitive
+      closure</em> of <span class="math inline"><em>R</em></span>, let
+      <span class="math inline"><em>B</em></span> be a transitive
+      relation containing <span class="math inline"><em>R</em></span>.
+      We will show that <span
+      class="math inline"><em>R</em><sup>+</sup> ⊂ <em>B</em></span>.</p>
+      <p>To that end we will show that <span
+      class="math inline"><em>R</em><sub><em>i</em></sub> ⊂ <em>B</em></span>
+      for each <span class="math inline"><em>i</em> ∈ <em>N</em></span>.
+      Call a number k splendid if <span
+      class="math inline"><em>R</em><sub><em>k</em></sub> ⊂ <em>B</em></span>.
+      By definition <span
+      class="math inline"><em>R</em><sub>0</sub> = <em>R</em> ⊂ <em>B</em></span>
+      so zero is spendid.</p>
+      <p>If <span class="math inline"><em>k</em></span> is splendid we
+      will show that <span class="math inline"><em>k</em> + 1</span> is
+      splendid as well. Assume <span
+      class="math inline"><em>k</em></span> is splendid, i.e. <span
+      class="math inline"><em>R</em><sub><em>k</em></sub> ⊂ <em>B</em></span>.
+      Then for <span
+      class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em> + 1</sub> \ <em>R</em><sub><em>k</em></sub></span>
+      there is a <span
+      class="math inline"><em>t</em> ∈ <em>S</em></span> such that <span
+      class="math inline">(<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>k</em></sub> ⊂ <em>B</em></span>
+      and <span
+      class="math inline">(<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub> ⊂ <em>B</em></span>.
+      Since <span class="math inline"><em>B</em></span> is transitive we
+      also <span
+      class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>B</em></span>.
+      Hence <span
+      class="math inline"><em>R</em><sub><em>k</em> + 1</sub> ⊂ <em>B</em></span>.</p>
+      <p>By the principle of mathematical induction all numbers are
+      splendid.</p>
+      <h1 id="section-2">2.2.8</h1>
+      <p>Suppose <span class="math inline"><em>R</em></span> is a binary
+      relation on a set <span class="math inline"><em>S</em></span> and
+      <span class="math inline"><em>P</em></span> is a predicate on
+      <span class="math inline"><em>S</em></span> that is preserved by
+      <span class="math inline"><em>R</em></span>. Show that <span
+      class="math inline"><em>P</em></span> is also preserved by <span
+      class="math inline"><em>R</em>*</span>.</p>
+      <h2 id="proof-3">Proof</h2>
+      <p>A predicate <span class="math inline"><em>T</em></span> is
+      preserved by relation <span class="math inline"><em>R</em></span>
+      if whenever <span
+      class="math inline">(<em>s</em>,<em>s</em>′) ∈ <em>R</em></span>
+      and <span class="math inline"><em>T</em>(<em>s</em>)</span> we
+      also have <span
+      class="math inline"><em>T</em>(<em>s</em>′)</span>.</p>
+      <p><span class="math inline"><em>R</em><sup>*</sup></span> is the
+      <em>reflexive and transitive closure</em> of <span
+      class="math inline"><em>R</em></span>, i.e. the smallest reflexive
+      and transitive relation that contains <span
+      class="math inline"><em>R</em></span>. By exercise 2.2.7 we know
+      that there is a sequence of relations <span
+      class="math inline"><em>R</em><sub><em>i</em></sub></span> for
+      <span class="math inline"><em>i</em> ∈ <em>N</em></span> such
+      that</p>
+      <p><span
+      class="math display"><em>R</em><sub>0</sub> = <em>R</em><sup>+</sup></span></p>
+      <p>and</p>
+      <p><span
+      class="math display"><em>R</em><sub><em>i</em> + 1</sub> = <em>R</em><sub><em>i</em></sub> ∪ {(<em>s</em>,<em>u</em>)|<em>t</em> ∈ <em>S</em>; (<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>i</em></sub>, (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>i</em></sub>}</span></p>
+      <p>with <span
+      class="math inline"><em>R</em><sup>*</sup> = ⋃<sub><em>i</em></sub><em>R</em><sub><em>i</em></sub></span>.</p>
+      <p>Call a number <span
+      class="math inline"><em>k</em> ∈ <em>N</em></span> gratefull if
+      <span class="math inline"><em>R</em><sub><em>k</em></sub></span>
+      preserves <span class="math inline"><em>P</em></span>. By exercise
+      2.2.6 <span
+      class="math inline"><em>R</em><sub>0</sub> = <em>R</em><sup>+</sup> = <em>R</em> ∪ {(<em>s</em>,<em>s</em>)|<em>s</em> ∈ <em>S</em>}</span>.
+      So for <span
+      class="math inline">(<em>s</em>,<em>s</em>′) ∈ <em>R</em><sub>0</sub></span>
+      we have <span class="math inline"><em>s</em> = <em>s</em>′</span>
+      or <span
+      class="math inline">(<em>s</em>,<em>s</em>′) ∈ <em>R</em></span>.
+      Either way, whenever <span
+      class="math inline"><em>P</em>(<em>s</em>)</span> also $P(s’)
+      because if <span
+      class="math inline"><em>s</em> = <em>s</em>′</span> then <span
+      class="math inline"><em>P</em>(<em>s</em>) = <em>P</em>(<em>s</em>′)</span>,
+      otherwise <span class="math inline"><em>P</em>(<em>s</em>′)</span>
+      because <span class="math inline"><em>R</em></span> preserves
+      <span class="math inline"><em>P</em></span>.</p>
+      <p>Assume <span class="math inline"><em>k</em></span> is
+      gratefull, we will show that <span
+      class="math inline"><em>k</em> + 1</span> is gratefull as well.
+      Without loss of generality let <span
+      class="math inline">(<em>s</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em> + 1</sub> \ <em>R</em><sub><em>k</em></sub></span>
+      and <span class="math inline"><em>P</em>(<em>s</em>)</span>. Then
+      there exist <span
+      class="math inline"><em>t</em> ∈ <em>S</em></span> such that <span
+      class="math inline">(<em>s</em>,<em>t</em>), (<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.
+      Since <span class="math inline"><em>k</em></span> is assumed to be
+      gratefull, <span
+      class="math inline"><em>R</em><sub><em>k</em></sub></span>
+      preserves <span class="math inline"><em>P</em></span> so from
+      <span class="math inline"><em>P</em>(<em>s</em>)</span> also <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> since <span
+      class="math inline">(<em>s</em>,<em>t</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.
+      And since <span class="math inline"><em>P</em>(<em>t</em>)</span>
+      also <span class="math inline"><em>P</em>(<em>u</em>)</span> since
+      <span
+      class="math inline">(<em>t</em>,<em>u</em>) ∈ <em>R</em><sub><em>k</em></sub></span>.
+      Hence <span class="math inline"><em>k</em> + 1</span> is
+      gratefull.</p>
+      <p>By the principle of mathematical induction every natural number
+      is gratefull. I.e. <span
+      class="math inline"><em>R</em><sup>*</sup></span> preserve <span
+      class="math inline"><em>P</em></span>.</p>
+      <h1 id="section-3">3.2.4</h1>
+      <blockquote>
+      <p>How many elements does <span
+      class="math inline"><em>S</em><sub>3</sub></span> have?</p>
+      </blockquote>
+      <h2 id="proof-4">Proof</h2>
+      <p>The sequence of set <span
+      class="math inline"><em>S</em><sub><em>i</em></sub></span> for
+      <span class="math inline"><em>i</em> ∈ <em>N</em></span> is
+      defined as</p>
+      <p><span
+      class="math display"><em>S</em><sub>0</sub> = ⌀</span></p>
+      <p>and</p>
+      <p><span
+      class="math display"><em>S</em><sub><em>i</em> + 1</sub> = {<em>t</em><em>r</em><em>u</em><em>e</em>, <em>f</em><em>a</em><em>l</em><em>s</em><em>e</em>, <em>O</em>} ∪ {<em>s</em><em>u</em><em>c</em><em>c</em><em>t</em>, <em>p</em><em>r</em><em>e</em><em>d</em><em>t</em>, <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em><em>t</em>|<em>t</em>∈<em>S</em><sub><em>i</em></sub>}∪{<em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub>|<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub> ∈ <em>S</em><sub><em>i</em></sub>}</span></p>
+      <p>Let <span
+      class="math inline"><em>T</em><sub><em>i</em></sub> = #<em>S</em><sub><em>i</em></sub></span>.
+      Then <span class="math inline"><em>T</em><sub>0</sub> = 0</span>
+      and</p>
+      <p><span
+      class="math display"><em>T</em><sub><em>i</em> + 1</sub> = 3 + 3 ⋅ <em>T</em><sub><em>i</em></sub> + <em>T</em><sub><em>i</em></sub><sup>3</sup></span></p>
+      <p>The sequence starts with <span
+      class="math inline">0, 3, 39, 59439, …</span>.</p>
+      <p>So there are 59439 elements in <span
+      class="math inline"><em>S</em><sub>3</sub></span>.</p>
+      <h1 id="section-4">3.2.5</h1>
+      <blockquote>
+      <p>Show that the sets <span
+      class="math inline"><em>S</em><sub><em>i</em></sub></span> are
+      <em>cumulative</em>; that is, that for each <span
+      class="math inline"><em>i</em></span> we have <span
+      class="math inline"><em>S</em><sub><em>i</em></sub> ⊂ <em>S</em><sub><em>i</em> + 1</sub></span>.</p>
+      </blockquote>
+      <h2 id="proof-5">Proof</h2>
+      <p>Call <span class="math inline"><em>k</em></span> frivolous if
+      <span
+      class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>.
+      We will show that all numbers are frivolous.</p>
+      <p>Since <span
+      class="math inline"><em>S</em><sub>0</sub> = ⌀</span> and <span
+      class="math inline">⌀ ⊂ <em>A</em></span> for any set <span
+      class="math inline"><em>A</em></span>, in particular <span
+      class="math inline"><em>S</em><sub>1</sub></span>, we see that 0
+      is frivolous.</p>
+      <p>Assume that <span class="math inline"><em>k</em></span> is
+      frivolous. We will show that <span
+      class="math inline"><em>k</em> + 1</span> is frivolous as well.
+      Let <span
+      class="math inline"><em>s</em> ∈ <em>S</em><sub><em>k</em> + 1</sub></span>.
+      There are three cases to consider</p>
+      <ul>
+      <li><span
+      class="math inline"><em>s</em> ∈ {<em>t</em><em>r</em><em>u</em><em>e</em>, <em>f</em><em>a</em><em>l</em><em>s</em><em>e</em>, 0}</span>.
+      By definition $sS_{k+2}.</li>
+      <li>$s{succ t, pred t, iszero t |tS_{k}}. Since <span
+      class="math inline"><em>k</em></span> is frivolous, i.e <span
+      class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>,
+      we see that</li>
+      </ul>
+      <p><span
+      class="math display">{<em>s</em><em>u</em><em>c</em><em>c</em><em>t</em>, <em>p</em><em>r</em><em>e</em><em>d</em><em>t</em>, <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em><em>t</em>|<em>t</em>∈<em>S</em><sub><em>k</em></sub>}⊂{<em>s</em><em>u</em><em>c</em><em>c</em><em>t</em>,<em>p</em><em>r</em><em>e</em><em>d</em><em>t</em>,<em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em><em>t</em>|<em>t</em> ∈ <em>S</em><sub><em>k</em> + 1</sub>} ⊂ <em>S</em><sub><em>k</em> + 2</sub></span></p>
+      <ul>
+      <li>$s{if t_{1} then t_{2} else t_{3}|t_{1},t_{2},t_{3}S_{k}}.
+      Since <span class="math inline"><em>k</em></span> is frivolous,
+      i.e. <span
+      class="math inline"><em>S</em><sub><em>k</em></sub> ⊂ <em>S</em><sub><em>k</em> + 1</sub></span>,
+      we see that</li>
+      </ul>
+      <p><span
+      class="math display">{<em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub>|<em>t</em><sub>1</sub>,<em>t</em><sub>2</sub>,<em>t</em><sub>3</sub>∈<em>S</em><sub><em>k</em></sub>}⊂{<em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub>|<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub> ∈ <em>S</em><sub><em>k</em> + 1</sub>} ⊂ <em>S</em><sub><em>k</em> + 2</sub></span></p>
+      <p>In all cases <span
+      class="math inline"><em>s</em> ∈ <em>S</em><sub><em>k</em> + 2</sub></span>,
+      hence <span class="math inline"><em>k</em> + 1</span> is
+      frivolous.</p>
+      <p>By the principle of mathematical induction all numbers are
+      frivolous.</p>
+      <h1 id="principle-of-induction-on-terms">3.3.4 Principle of
+      Induction on Terms</h1>
+      <blockquote>
+      <p>Suppose <span class="math inline"><em>P</em></span> is a
+      predicate on terms</p>
+      <h3 id="induction-on-depth">Induction on Depth</h3>
+      <p>If for each term <span class="math inline"><em>s</em></span>,
+      given <span class="math inline"><em>P</em>(<em>r</em>)</span> for
+      all <span class="math inline"><em>r</em></span> such that <span
+      class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>r</em>) &lt; <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>s</em>)</span>
+      we can show <span
+      class="math inline"><em>P</em>(<em>s</em>)</span>, then <span
+      class="math inline"><em>P</em>(<em>s</em>)</span> holds for all
+      <span class="math inline"><em>s</em></span>.</p>
+      <h3 id="induction-on-size">Induction on Size</h3>
+      <p>If for each term <span class="math inline"><em>s</em></span>,
+      given <span class="math inline"><em>P</em>(<em>r</em>)</span> for
+      all <span class="math inline"><em>r</em></span> such that <span
+      class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>r</em>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>s</em>)</span>
+      we can show <span
+      class="math inline"><em>P</em>(<em>s</em>)</span>, then <span
+      class="math inline"><em>P</em>(<em>s</em>)</span> holds for all
+      <span class="math inline"><em>s</em></span>.</p>
+      <h3 id="structural-induction">Structural Induction</h3>
+      <p>If for each term <span class="math inline"><em>s</em></span>,
+      given <span class="math inline"><em>P</em>(<em>r</em>)</span> for
+      all immediate subterms <span class="math inline"><em>r</em></span>
+      of <span class="math inline"><em>s</em></span>, we can show <span
+      class="math inline"><em>P</em>(<em>s</em>)</span>, then <span
+      class="math inline"><em>P</em>(<em>s</em>)</span> holds for all
+      <span class="math inline"><em>s</em></span>.</p>
+      </blockquote>
+      <h2 id="proof-6">Proof</h2>
+      <h3 id="induction-on-depth-1">Induction on Depth</h3>
+      <p>We call <span
+      class="math inline"><em>n</em> ∈ <em>N</em> \ {0}</span>
+      <em>deep</em> if and only if for all terms <span
+      class="math inline"><em>s</em></span> of <span
+      class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>s</em>) ≤ <em>n</em></span>
+      holds that <span
+      class="math inline"><em>P</em>(<em>s</em>)</span>. We will show
+      that all numbers are deep.</p>
+      <p>Notice that <span class="math inline">1</span> is deep. A term
+      of <span class="math inline"><em>t</em></span> with <span
+      class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>) = 1</span>
+      is a constant and there are no terms with a smaller depth, so are
+      assumption holds vacuously and <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
+      <p>Assume <span class="math inline"><em>k</em></span> is deep. We
+      will show that <span class="math inline"><em>k</em> + 1</span> is
+      deep. Let <span class="math inline"><em>t</em></span> be a term of
+      depth <span class="math inline"><em>k</em> + 1</span>. There are
+      two cases</p>
+      <ul>
+      <li><p><span
+      class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em>(<em>t</em>′)</span>
+      or <span
+      class="math inline"><em>t</em> = <em>p</em><em>r</em><em>e</em><em>d</em>(<em>t</em>′)</span>
+      or <span
+      class="math inline"><em>t</em> = <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em>(<em>t</em>′)</span>
+      for a term <span class="math inline"><em>t</em>′</span>. Notice
+      that in all cases <span
+      class="math inline"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>′) &lt; <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>′) + 1 = <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>)</span>.
+      <span class="math inline"><em>k</em></span> is deep so <span
+      class="math inline"><em>P</em>(<em>t</em>′)</span> holds. With our
+      assumption we deduce that <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p></li>
+      <li><p><span
+      class="math inline"><em>t</em> = <em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub></span>
+      for terms <span class="math inline"><em>t</em><sub>1</sub></span>,
+      <span class="math inline"><em>t</em><sub>2</sub></span> and <span
+      class="math inline"><em>t</em><sub>3</sub></span>. Notice that for
+      each <span class="math inline"><em>i</em> ∈ {1, 2, 3}</span> we
+      have</p></li>
+      </ul>
+      <p><span
+      class="math display"><em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em><sub><em>i</em></sub>) ≤ <em>m</em><em>a</em><em>x</em>{<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub>} &lt; <em>m</em><em>a</em><em>x</em>{<em>t</em><sub>1</sub>, <em>t</em><sub>2</sub>, <em>t</em><sub>3</sub>} + 1 = <em>d</em><em>e</em><em>p</em><em>t</em><em>h</em>(<em>t</em>)</span></p>
+      <p><span class="math inline"><em>k</em></span> is deep so <span
+      class="math inline"><em>P</em>(<em>t</em><sub>1</sub>)</span>,
+      <span
+      class="math inline"><em>P</em>(<em>t</em><sub>2</sub>)</span> and
+      $P(t_{3}) hold. With our assumption we deduce that <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
+      <p>In either of the two cases to consider we have shown that <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> holds, hence
+      <span class="math inline"><em>k</em> + 1</span> is deep.</p>
+      <p>With the principle of mathematical induction all natural
+      numbers besides 0 are deep.</p>
+      <h3 id="induction-on-size-1">Induction on Size</h3>
+      <p>We call <span
+      class="math inline"><em>n</em> ∈ <em>N</em> \ {0}</span>
+      <em>tall</em> if and only if for all terms <span
+      class="math inline"><em>s</em></span> of <span
+      class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>s</em>) ≤ <em>n</em></span>
+      holds that <span
+      class="math inline"><em>P</em>(<em>s</em>)</span>. We will show
+      that all numbers are tall.</p>
+      <p>Notice that <span class="math inline">1</span> is tall. A term
+      of <span class="math inline"><em>t</em></span> with <span
+      class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>) = 1</span>
+      is a constant and there are no terms with a smaller size, so are
+      assumption holds vacuously and <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
+      <p>Assume <span class="math inline"><em>k</em></span> is tall. We
+      will show that <span class="math inline"><em>k</em> + 1</span> is
+      tall. Let <span class="math inline"><em>t</em></span> be a term of
+      size <span class="math inline"><em>k</em> + 1</span>. There are
+      two cases</p>
+      <ul>
+      <li><p><span
+      class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em>(<em>t</em>′)</span>
+      or <span
+      class="math inline"><em>t</em> = <em>p</em><em>r</em><em>e</em><em>d</em>(<em>t</em>′)</span>
+      or <span
+      class="math inline"><em>t</em> = <em>i</em><em>s</em><em>z</em><em>e</em><em>r</em><em>o</em>(<em>t</em>′)</span>
+      for a term <span class="math inline"><em>t</em>′</span>. Notice
+      that in all cases <span
+      class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>′) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>′) + 1 = <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span>.
+      <span class="math inline"><em>k</em></span> is large so <span
+      class="math inline"><em>P</em>(<em>t</em>′)</span> holds. With our
+      assumption we deduce that <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p></li>
+      <li><p><span
+      class="math inline"><em>t</em> = <em>i</em><em>f</em><em>t</em><sub>1</sub><em>t</em><em>h</em><em>e</em><em>n</em><em>t</em><sub>2</sub><em>e</em><em>l</em><em>s</em><em>e</em><em>t</em><sub>3</sub></span>
+      for terms <span class="math inline"><em>t</em><sub>1</sub></span>,
+      <span class="math inline"><em>t</em><sub>2</sub></span> and <span
+      class="math inline"><em>t</em><sub>3</sub></span>. Notice that for
+      each <span class="math inline"><em>i</em> ∈ {1, 2, 3}</span> we
+      have</p></li>
+      </ul>
+      <p><span
+      class="math display"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub><em>i</em></sub>) ≤ <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>1</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>2</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>3</sub>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>1</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>2</sub>) + <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em><sub>3</sub>) + 1 = <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span></p>
+      <p><span class="math inline"><em>k</em></span> is deep so <span
+      class="math inline"><em>P</em>(<em>t</em><sub>1</sub>)</span>,
+      <span
+      class="math inline"><em>P</em>(<em>t</em><sub>2</sub>)</span> and
+      $P(t_{3}) hold. With our assumption we deduce that <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> holds.</p>
+      <p>In either of the two cases to consider we have shown that <span
+      class="math inline"><em>P</em>(<em>t</em>)</span> holds, hence
+      <span class="math inline"><em>k</em> + 1</span> is tall.</p>
+      <p>With the principle of mathematical induction all natural
+      numbers besides 0 are tall.</p>
+      <h3 id="structural-induction-1">Structural Induction</h3>
+      <p>Notice that for all terms <span
+      class="math inline"><em>t</em></span> we have for all of <span
+      class="math inline"><em>t</em></span>s immediate subterms <span
+      class="math inline"><em>r</em></span> <span
+      class="math inline"><em>s</em><em>i</em><em>z</em><em>e</em>(<em>r</em>) &lt; <em>s</em><em>i</em><em>z</em><em>e</em>(<em>t</em>)</span>.
+      The result then follows by induction on size.</p>
+      <h1 id="section-5">3.5.5</h1>
+      <blockquote>
+      <p>Spell out the induction principle used in the preceding proof,
+      in the style of 3.3.4.</p>
+      </blockquote>
+      <h2 id="answer">Answer</h2>
+      <p>The used principle of induction is <em>structural
+      induction</em>.</p>
+      <blockquote>
+      <p>If for each term <span class="math inline"><em>s</em></span>,
+      given <span class="math inline"><em>P</em>(<em>r</em>)</span> for
+      all immediate subterms <span class="math inline"><em>r</em></span>
+      of <span class="math inline"><em>s</em></span>, we can show <span
+      class="math inline"><em>P</em>(<em>s</em>)</span>, then <span
+      class="math inline"><em>P</em>(<em>s</em>)</span> holds for all
+      <span class="math inline"><em>s</em></span>.</p>
+      </blockquote>
+      <h1 id="section-6">3.5.10</h1>
+      <blockquote>
+      <p>Rephrase definition 3.5.9 as a set of inference rules.</p>
+      </blockquote>
+      <h2 id="answer-1">Answer</h2>
+      <h3 id="closure">Closure</h3>
+      <pre><code>t --&gt; t&#39;
 -------
 t --&gt;* t&#39;</code></pre>
-<h3 id="reflexive">Reflexive</h3>
-<pre><code>-------
+      <h3 id="reflexive">Reflexive</h3>
+      <pre><code>-------
 t --&gt;* t</code></pre>
-<h3 id="transitive">Transitive</h3>
-<pre><code>t --&gt;* t&#39;, t&#39; --&gt;* t&#39;&#39;
+      <h3 id="transitive">Transitive</h3>
+      <pre><code>t --&gt;* t&#39;, t&#39; --&gt;* t&#39;&#39;
 ----------------------
 t --&gt;* t&#39;&#39;</code></pre>
-<h1 id="section-7">3.5.13</h1>
-<h2 id="part-1">Part 1</h2>
-<blockquote>
-<p>Suppose we add a new rule</p>
-<pre><code>if true then t2 else t3 -&gt; t3</code></pre>
-<p>to the ones in Figure 3-1. Which of the above theorems (3.5.4, 3.5.7,
-3.5.8, 3.5.11 and 3.5.12) remain valid.</p>
-</blockquote>
-<h3 id="section-8">3.5.4</h3>
-<blockquote>
-<p><em>Determinacy of one-step evaluation</em>: if <span
-class="math inline"><em>t</em> → <em>t</em><sub>1</sub></span> and <span
-class="math inline"><em>t</em> → <em>t</em><sub>2</sub></span> then
-<span
-class="math inline"><em>t</em><sub>1</sub> = <em>t</em><sub>2</sub></span>.</p>
-</blockquote>
-<p>This isn’t valid anymore since
-<code>if true then O else succ O</code> had no two one step that are
-different, i.e. <code>O</code> and <code>succ O</code>.</p>
-<h3 id="section-9">3.5.7</h3>
-<blockquote>
-<p>Every value is in a normal form.</p>
-</blockquote>
-<p>This remains true. The values are <code>true</code> and
-<code>false</code> and the new rule does not apply to it.</p>
-<h3 id="section-10">3.5.8</h3>
-<blockquote>
-<p>If <code>t</code> is in normal form, then <code>t</code> is a
-value.</p>
-</blockquote>
-<p>This remains true.</p>
-<h3 id="section-11">3.5.11</h3>
-<blockquote>
-<p><em>uniqueness of normal forms</em>: if <span
-class="math inline"><em>t</em> →  * <em>u</em></span> and <span
-class="math inline"><em>t</em> →  * <em>v</em></span>, where <span
-class="math inline"><em>u</em></span> and <span
-class="math inline"><em>v</em></span> are both normal forms then <span
-class="math inline"><em>u</em> = <em>v</em></span>.</p>
-</blockquote>
-<p>This is invalid. Consequence of the invalidation of the
-<em>determinancy of one-step evaluation</em> under the new rule.</p>
-<h3 id="section-12">3.5.12</h3>
-<blockquote>
-<p><em>Termination of evaluation</em>: for every term <span
-class="math inline"><em>t</em></span> there is some normal form <span
-class="math inline"><em>u</em></span> such that <span
-class="math inline"><em>t</em> →  * <em>u</em></span>.</p>
-</blockquote>
-<p>This remains valid. It isn’t unique anymore though.</p>
-<h2 id="part-2">Part 2</h2>
-<blockquote>
-<p>Suppose instead that we add this rule:</p>
-<pre><code>t_2 --&gt; u
+      <h1 id="section-7">3.5.13</h1>
+      <h2 id="part-1">Part 1</h2>
+      <blockquote>
+      <p>Suppose we add a new rule</p>
+      <pre><code>if true then t2 else t3 -&gt; t3</code></pre>
+      <p>to the ones in Figure 3-1. Which of the above theorems (3.5.4,
+      3.5.7, 3.5.8, 3.5.11 and 3.5.12) remain valid.</p>
+      </blockquote>
+      <h3 id="section-8">3.5.4</h3>
+      <blockquote>
+      <p><em>Determinacy of one-step evaluation</em>: if <span
+      class="math inline"><em>t</em> → <em>t</em><sub>1</sub></span> and
+      <span
+      class="math inline"><em>t</em> → <em>t</em><sub>2</sub></span>
+      then <span
+      class="math inline"><em>t</em><sub>1</sub> = <em>t</em><sub>2</sub></span>.</p>
+      </blockquote>
+      <p>This isn’t valid anymore since
+      <code>if true then O else succ O</code> had no two one step that
+      are different, i.e. <code>O</code> and <code>succ O</code>.</p>
+      <h3 id="section-9">3.5.7</h3>
+      <blockquote>
+      <p>Every value is in a normal form.</p>
+      </blockquote>
+      <p>This remains true. The values are <code>true</code> and
+      <code>false</code> and the new rule does not apply to it.</p>
+      <h3 id="section-10">3.5.8</h3>
+      <blockquote>
+      <p>If <code>t</code> is in normal form, then <code>t</code> is a
+      value.</p>
+      </blockquote>
+      <p>This remains true.</p>
+      <h3 id="section-11">3.5.11</h3>
+      <blockquote>
+      <p><em>uniqueness of normal forms</em>: if <span
+      class="math inline"><em>t</em> →  * <em>u</em></span> and <span
+      class="math inline"><em>t</em> →  * <em>v</em></span>, where <span
+      class="math inline"><em>u</em></span> and <span
+      class="math inline"><em>v</em></span> are both normal forms then
+      <span class="math inline"><em>u</em> = <em>v</em></span>.</p>
+      </blockquote>
+      <p>This is invalid. Consequence of the invalidation of the
+      <em>determinancy of one-step evaluation</em> under the new
+      rule.</p>
+      <h3 id="section-12">3.5.12</h3>
+      <blockquote>
+      <p><em>Termination of evaluation</em>: for every term <span
+      class="math inline"><em>t</em></span> there is some normal form
+      <span class="math inline"><em>u</em></span> such that <span
+      class="math inline"><em>t</em> →  * <em>u</em></span>.</p>
+      </blockquote>
+      <p>This remains valid. It isn’t unique anymore though.</p>
+      <h2 id="part-2">Part 2</h2>
+      <blockquote>
+      <p>Suppose instead that we add this rule:</p>
+      <pre><code>t_2 --&gt; u
 ----------------------------
 if t_1 then t_2 else t_3 --&gt; if t_1 then u else t_3</code></pre>
-<p>Now which of the above theorems remain valid? Do any of the proofs
-need to change?</p>
-</blockquote>
-<h3 id="section-13">3.5.4</h3>
-<p>Theorem 3.5.4 is invalid. Multiple evaluation rules could apply, for
-example</p>
-<pre><code>if true then (if false then true else false) else false</code></pre>
-<p>could evaluate under the original rules to</p>
-<pre><code>if false then true else false</code></pre>
-<p>or with the new rule</p>
-<pre><code>if true then false else false</code></pre>
-<h3 id="section-14">3.5.7</h3>
-<p>This remains valid. The proof is essentially the same.</p>
-<h3 id="section-15">3.5.8</h3>
-<p>This remains valid. The proof is also essentially the same.</p>
-<h3 id="section-16">3.5.11</h3>
-<p>This remains valid, The proof is different because the determinancy
-of single-step evaluation is invalid with the new rule.</p>
-<h3 id="section-17">3.5.12</h3>
-<p>This remains valid as well. The proof is the same.</p>
-<h1 id="section-18">3.5.14</h1>
-<blockquote>
-<p>Show that Theorem 3.5.4 is also valid for the evaluation relation on
-arithmetic expressions: if <span
-class="math inline"><em>t</em> → <em>u</em></span> and <span
-class="math inline"><em>t</em> → <em>v</em></span> then <span
-class="math inline"><em>u</em> = <em>v</em></span>.</p>
-</blockquote>
-<h2 id="proof-7">Proof</h2>
-<p>We will show by induction of the structure of a term <span
-class="math inline"><em>t</em></span>.</p>
-<p>By Theorem 3.5.4 this the theorem is valid for B. We will focus on
-the extention.</p>
-<p>If the rule applied for the derivation <span
-class="math inline"><em>t</em> → <em>u</em></span> is <em>E-SUCC</em>
-then <span
-class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em><em>t</em><sub>1</sub></span>
-for a <span class="math inline"><em>t</em><sub>1</sub></span>. The only
-rule applicable on a <span
-class="math inline"><em>s</em><em>u</em><em>c</em><em>c</em></span> term
-is <em>E-SUCC</em>, so in this case the result follows.</p>
-<p>if the rule applied was <span
-class="math inline"><em>p</em><em>r</em><em>e</em><em>d</em><em>O</em></span>
-something similar follows. As with all other terms.</p>
-<h1 id="section-19">3.3.16</h1>
-<p>Let <span class="math inline"><em>L</em></span> be the language of
-untyped arithmetic expressions and <span
-class="math inline"><em>M</em></span> be <span
-class="math inline"><em>L</em></span> augmented with
-<code>wrong</code>.</p>
-<p><span class="math inline"><em>L</em></span> agrees with <span
-class="math inline"><em>M</em></span> in the following way:</p>
-<blockquote>
-<p>Whenever an expression <span class="math inline"><em>l</em></span> in
-<span class="math inline"><em>L</em></span> is in normal form, but is
-not a value, there is an derivation of <span
-class="math inline"><em>l</em>′</span> in <span
-class="math inline"><em>M</em></span> that directly leads to
-<code>wrong</code>.</p>
-</blockquote>
-<h2 id="proof-8">Proof</h2>
-<p>By definition of <span class="math inline"><em>M</em></span>.</p>
-<h1 id="section-20">3.5.17</h1>
-<blockquote>
-<p>Show that the small-step and big-step semantics for this language
-conincide, i.e. <span
-class="math inline"><em>t</em> →  * <em>v</em> ⇔ <em>t</em> ⇓ <em>v</em></span></p>
-</blockquote>
-<h2 id="proof-9">Proof</h2>
-<p>By induction on the length of derivations</p>
-<h1 id="section-21">3.5.18</h1>
-<blockquote>
-<p>Suppose we want to change the evaluation strategy of our language so
-that the <code>then</code> and <code>else</code> branches of an
-<code>if</code> expression are evaluated (in that order) <em>before</em>
-the guard is evaluated. Show how the evaluation rules need to change to
-achieve this effect.</p>
-</blockquote>
-<h2 id="answer-2">Answer</h2>
-<pre class="plain"><code>if true then v1 else v2 -&gt; v1</code></pre>
-<pre class="plain"><code>if false then v1 else v2 -&gt; v2</code></pre>
-<pre class="plain"><code>t2 -&gt; t2&#39;
+      <p>Now which of the above theorems remain valid? Do any of the
+      proofs need to change?</p>
+      </blockquote>
+      <h3 id="section-13">3.5.4</h3>
+      <p>Theorem 3.5.4 is invalid. Multiple evaluation rules could
+      apply, for example</p>
+      <pre><code>if true then (if false then true else false) else false</code></pre>
+      <p>could evaluate under the original rules to</p>
+      <pre><code>if false then true else false</code></pre>
+      <p>or with the new rule</p>
+      <pre><code>if true then false else false</code></pre>
+      <h3 id="section-14">3.5.7</h3>
+      <p>This remains valid. The proof is essentially the same.</p>
+      <h3 id="section-15">3.5.8</h3>
+      <p>This remains valid. The proof is also essentially the same.</p>
+      <h3 id="section-16">3.5.11</h3>
+      <p>This remains valid, The proof is different because the
+      determinancy of single-step evaluation is invalid with the new
+      rule.</p>
+      <h3 id="section-17">3.5.12</h3>
+      <p>This remains valid as well. The proof is the same.</p>
+      <h1 id="section-18">3.5.14</h1>
+      <blockquote>
+      <p>Show that Theorem 3.5.4 is also valid for the evaluation
+      relation on arithmetic expressions: if <span
+      class="math inline"><em>t</em> → <em>u</em></span> and <span
+      class="math inline"><em>t</em> → <em>v</em></span> then <span
+      class="math inline"><em>u</em> = <em>v</em></span>.</p>
+      </blockquote>
+      <h2 id="proof-7">Proof</h2>
+      <p>We will show by induction of the structure of a term <span
+      class="math inline"><em>t</em></span>.</p>
+      <p>By Theorem 3.5.4 this the theorem is valid for B. We will focus
+      on the extention.</p>
+      <p>If the rule applied for the derivation <span
+      class="math inline"><em>t</em> → <em>u</em></span> is
+      <em>E-SUCC</em> then <span
+      class="math inline"><em>t</em> = <em>s</em><em>u</em><em>c</em><em>c</em><em>t</em><sub>1</sub></span>
+      for a <span class="math inline"><em>t</em><sub>1</sub></span>. The
+      only rule applicable on a <span
+      class="math inline"><em>s</em><em>u</em><em>c</em><em>c</em></span>
+      term is <em>E-SUCC</em>, so in this case the result follows.</p>
+      <p>if the rule applied was <span
+      class="math inline"><em>p</em><em>r</em><em>e</em><em>d</em><em>O</em></span>
+      something similar follows. As with all other terms.</p>
+      <h1 id="section-19">3.3.16</h1>
+      <p>Let <span class="math inline"><em>L</em></span> be the language
+      of untyped arithmetic expressions and <span
+      class="math inline"><em>M</em></span> be <span
+      class="math inline"><em>L</em></span> augmented with
+      <code>wrong</code>.</p>
+      <p><span class="math inline"><em>L</em></span> agrees with <span
+      class="math inline"><em>M</em></span> in the following way:</p>
+      <blockquote>
+      <p>Whenever an expression <span
+      class="math inline"><em>l</em></span> in <span
+      class="math inline"><em>L</em></span> is in normal form, but is
+      not a value, there is an derivation of <span
+      class="math inline"><em>l</em>′</span> in <span
+      class="math inline"><em>M</em></span> that directly leads to
+      <code>wrong</code>.</p>
+      </blockquote>
+      <h2 id="proof-8">Proof</h2>
+      <p>By definition of <span
+      class="math inline"><em>M</em></span>.</p>
+      <h1 id="section-20">3.5.17</h1>
+      <blockquote>
+      <p>Show that the small-step and big-step semantics for this
+      language conincide, i.e. <span
+      class="math inline"><em>t</em> →  * <em>v</em> ⇔ <em>t</em> ⇓ <em>v</em></span></p>
+      </blockquote>
+      <h2 id="proof-9">Proof</h2>
+      <p>By induction on the length of derivations</p>
+      <h1 id="section-21">3.5.18</h1>
+      <blockquote>
+      <p>Suppose we want to change the evaluation strategy of our
+      language so that the <code>then</code> and <code>else</code>
+      branches of an <code>if</code> expression are evaluated (in that
+      order) <em>before</em> the guard is evaluated. Show how the
+      evaluation rules need to change to achieve this effect.</p>
+      </blockquote>
+      <h2 id="answer-2">Answer</h2>
+      <pre class="plain"><code>if true then v1 else v2 -&gt; v1</code></pre>
+      <pre class="plain"><code>if false then v1 else v2 -&gt; v2</code></pre>
+      <pre class="plain"><code>t2 -&gt; t2&#39;
 --------
 if t1 then t2 else t3 -&gt; if t1 then t2&#39; else t3</code></pre>
-<pre class="plain"><code>t3 -&gt; t3&#39;
+      <pre class="plain"><code>t3 -&gt; t3&#39;
 --------
 if t1 then v2 else t3 -&gt; if t1 then v2 else t3&#39;</code></pre>
-<pre class="plain"><code>t1 -&gt; t1&#39;
+      <pre class="plain"><code>t1 -&gt; t1&#39;
 --------
 if t1 then v2 else v2 -&gt; if t1&#39; then v2 else v3</code></pre>
-</body>
+  </body>
+
 </html>

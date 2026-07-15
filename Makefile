@@ -11,7 +11,18 @@ all: ${MINIFIED_TARGETS} ${EXERCISES}
 	@echo "finished"
 
 ${EXERCISES}: $(shell find exercises -type f)
-	find exercises -name '*.md' | sort | xargs cat | sed 's/^#[^#].*$$/\n&/g' | pandoc -s -f markdown -t html --metadata-file exercises/meta.yml -o $@
+	find exercises -name '*.md' \
+		| sort \
+		| xargs cat \
+		| sed 's/^#[^#].*$$/\n&/g' \
+		| pandoc \
+			--standalone \
+			--from markdown \
+			--to html \
+			--data-dir=exercises/data \
+			--template=exercises \
+			--metadata-file exercises/meta.yml \
+			--output $@
 
 ${JAVASCRIPT_DIR}/%.min.js: ${JAVASCRIPT_DIR}/%.js $(shell find src -type f)
 	uglifyjs $< --compress "pure_funcs=[F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9],pure_getters,keep_fargs=false,unsafe_comps,unsafe" | uglifyjs --mangle --output $@
